@@ -1,0 +1,66 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/clang-11",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-o",
+      "lib/ft_strlen.o",
+      "lib/ft_strlen.c"
+    ],
+    "directory": "/home/abrabant/Prog/42/philosophers",
+    "file": "/home/abrabant/Prog/42/philosophers/lib/ft_strlen.c",
+    "output": "/home/abrabant/Prog/42/philosophers/lib/ft_strlen.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang-11",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-o",
+      "lib/dputs.o",
+      "lib/dputs.c"
+    ],
+    "directory": "/home/abrabant/Prog/42/philosophers",
+    "file": "/home/abrabant/Prog/42/philosophers/lib/dputs.c",
+    "output": "/home/abrabant/Prog/42/philosophers/lib/dputs.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang-11",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-o",
+      "lib/parse_int.o",
+      "lib/parse_int.c"
+    ],
+    "directory": "/home/abrabant/Prog/42/philosophers",
+    "file": "/home/abrabant/Prog/42/philosophers/lib/parse_int.c",
+    "output": "/home/abrabant/Prog/42/philosophers/lib/parse_int.o"
+  },
+  {
+    "arguments": [
+      "/usr/bin/clang-11",
+      "-c",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Iinclude",
+      "-o",
+      "src/main.o",
+      "src/main.c"
+    ],
+    "directory": "/home/abrabant/Prog/42/philosophers",
+    "file": "/home/abrabant/Prog/42/philosophers/src/main.c",
+    "output": "/home/abrabant/Prog/42/philosophers/src/main.o"
+  }
+]
