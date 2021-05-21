@@ -1,11 +1,6 @@
 #include <unistd.h>
-#include "philo/lib.h"
 
-static bool	output_error(const char *s)
-{
-	dputs(s, STDERR_FILENO);
-	return (false);
-}
+#include "philo/lib.h"
 
 /*
 ** Parse a string representing a positive integer. The biggest C type available
@@ -23,11 +18,15 @@ bool	parse_uint(const char *sint, unsigned long long *n)
 	unsigned long long	new_val;
 
 	*n = 0;
+	if (*sint == '\0')
+		return (error_out("parse_uint: empty string.", false));
 	while (*sint != '\0')
 	{
+		if (!(*sint >= '0' && *sint <= '9'))
+			return (error_out("parse_uint: not a number (!isdigit).", false));
 		new_val = *n * 10 + *sint++ - 48;
 		if (new_val < *n)
-			return (output_error("parse_uint: overflow detected."));
+			return (error_out("parse_uint: overflow detected.", false));
 		*n = new_val;
 	}
 	return (true);
