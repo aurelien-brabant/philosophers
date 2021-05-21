@@ -5,7 +5,7 @@ LD_FLAGS	= -g
 
 RM			= rm -rf
 
-LIB			= $(addprefix lib/, ft_strlen.c dputs.c parse_int.c error.c)
+LIB			= $(addprefix lib/, ft_strlen.c dputs.c parse_uint.c error.c)
 
 SRCS		= $(LIB) src/main.c
 
