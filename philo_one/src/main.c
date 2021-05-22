@@ -15,9 +15,11 @@ static void	*destroy_philosophers(t_philosopher *philo)
 	while (i > 1)
 	{
 		cur = cur->left_philo;
+		free(cur->right_philo->right_fork);
 		free(cur->right_philo);
 		--i;
 	}
+	free(cur->right_fork);
 	free(cur);
 	return (NULL);
 }
@@ -53,17 +55,27 @@ static t_philosopher	*create_philosophers(unsigned long long philo_nb)
 static t_philosopher	*dress_philosophy_table(unsigned long long philo_nb)
 {
 	t_philosopher		*philo;
-	//t_fork				*forks;
-	//unsigned long long	i;
+	t_philosopher		*prev;
+	t_philosopher		*cur;
+	size_t				i;
 
-	/*forks = malloc(sizeof (*forks) * philo_nb);
-	if (forks == NULL)
-		return (NULL);
 	i = 0;
-	while (i < philo_nb)
-		forks[i++].state = FORK_STATE_UNUSED;
-	*/
 	philo = create_philosophers(philo_nb);
+	cur = philo;
+	while (i < philo_nb)
+	{
+		 cur->right_fork = malloc(sizeof(t_fork));
+		 if (cur->right_fork == NULL)
+		 	return (destroy_philosophers(cur));
+		 cur->right_fork->state = FORK_STATE_UNUSED;
+		 cur->right_fork->id = i + 1;
+		 if (i > 0)
+		 	cur->left_fork = prev->right_fork;
+		 prev = cur;
+		 cur = cur->right_philo;
+		 ++i;
+	}
+	philo->left_fork = philo->left_philo->right_fork;
 	return (philo);
 }
 

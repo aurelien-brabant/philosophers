@@ -9,7 +9,8 @@ typedef enum e_fork_state
 
 typedef struct s_fork
 {
-	t_fork_state	state;
+	t_fork_state		state;
+	unsigned long long	id;
 }	t_fork;
 
 typedef struct s_philosopher
