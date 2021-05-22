@@ -9,7 +9,7 @@
 ** because they will need to access them inside their respective thread.
 */
 
-static t_philosopher	*create_philosophers(unsigned long long *params)
+static t_philosopher	*create_philosophers(unsigned long long *params, pthread_mutex_t *mutexes)
 {
 	t_philosopher	*philo;
 	t_philosopher	*head;
@@ -24,6 +24,7 @@ static t_philosopher	*create_philosophers(unsigned long long *params)
 			return (destroy_philosophers(prev));
 		philo->id = i + 1;
 		philo->params = params;
+		philo->mutexes = mutexes;
 		if (i > 0)
 		{
 			philo->left_philo = prev;
@@ -72,7 +73,7 @@ void	*destroy_philosophers(t_philosopher *philo)
 ** place i.e at the left and right of each philosopher.
 */
 
-t_philosopher	*dress_philosophy_table(unsigned long long *params)
+t_philosopher	*dress_philosophy_table(unsigned long long *params, pthread_mutex_t *mutexes)
 {
 	t_philosopher		*philo;
 	t_philosopher		*prev;
@@ -80,7 +81,7 @@ t_philosopher	*dress_philosophy_table(unsigned long long *params)
 	size_t				i;
 
 	i = 0;
-	philo = create_philosophers(params);
+	philo = create_philosophers(params, mutexes);
 	cur = philo;
 	while (i < params[NUMBER_OF_PHILOSOPHERS])
 	{
