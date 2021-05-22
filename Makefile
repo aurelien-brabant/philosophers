@@ -1,25 +1,12 @@
-CC			= clang
-CFLAGS		= -g -Wall -Wextra -Werror -Iinclude
-LD			= clang
-LD_FLAGS	= -g
-
-RM			= rm -rf
-
-LIB			= $(addprefix lib/, ft_strlen.c dputs.c parse_uint.c error.c)
-
-SRCS		= $(LIB) src/main.c
-
-OBJS		= $(SRCS:%.c=%.o)
-
-all: $(OBJS)
-	$(LD) $(LD_FLAGS) $(OBJS) -o test
+all:
+	make -C philo_one
 
 clean:
-	$(RM) $(OBJS)
+	make clean -C philo_one
+	make clean -C lib
 
-fclean: clean
+fclean:
+	make fclean -C philo_one
+	make fclean -C lib
 
 re: fclean all
-
-%.o:%.c
-	$(CC) -c $(CFLAGS) $< -o $@

@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-#include "philo/lib.h"
+#include "lib.h"
 
 int	error_out(const char *msg, int exit_code)
 {

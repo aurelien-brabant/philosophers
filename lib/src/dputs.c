@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-#include "philo/lib.h"
+#include "lib.h"
 
 int	dputs(const char *s, int fd)
 {

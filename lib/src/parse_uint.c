@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-#include "philo/lib.h"
+#include "lib.h"
 
 /*
 ** Parse a string representing a positive integer. The biggest C type available
