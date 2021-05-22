@@ -1,5 +1,6 @@
 #ifndef PHILO_ONE_H
 # define PHILO_ONE_H
+# include <pthread.h>
 
 typedef enum e_fork_state
 {
@@ -23,6 +24,7 @@ typedef enum e_philo_state
 
 typedef struct s_philosopher
 {
+	pthread_t			thread;
 	unsigned long long	id;
 	unsigned long long	*params;
 	t_philo_state		state;

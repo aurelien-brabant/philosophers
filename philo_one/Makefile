@@ -11,4 +11,4 @@ all: $(TARGET)
 
 $(TARGET): $(OBJS) include/philo_one.h
 	make -C $(LIB_PHILO_PATH)
-	$(LD) $(OBJS) -L$(LIB_PHILO_PATH) -lphilo $(LD_FLAGS) -o $(TARGET) 
+	$(LD) $(OBJS) -L$(LIB_PHILO_PATH) -lphilo -lpthread $(LD_FLAGS) -o $(TARGET) 
