@@ -1,6 +1,6 @@
 include ../Makefile.template
 
-SRCS	= $(addprefix src/, main.c)
+SRCS	= $(addprefix src/, main.c setup.c)
 OBJS	= $(LIB_OBJS) $(SRCS:%.c=%.o)
 
 LIB_PHILO_PATH	:= ../lib
