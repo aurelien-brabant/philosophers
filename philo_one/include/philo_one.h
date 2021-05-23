@@ -20,13 +20,19 @@ typedef struct s_fork
 {
 	t_fork_state		state;
 	unsigned long long	id;
+	pthread_mutex_t		mutex;
 }	t_fork;
+
+/*
+** waiting_for_threads: set to true until all the threads have been created.
+*/
 
 typedef struct s_philosopher
 {
 	pthread_t			thread;
 	pthread_mutex_t		*mutexes;
 	bool					*health_check;
+	bool					*waiting_for_threads;
 	unsigned long long	id;
 	unsigned long long	*params;
 	t_philo_state		state;

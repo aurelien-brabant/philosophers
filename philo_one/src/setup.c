@@ -59,6 +59,7 @@ void	*destroy_philosophers(t_philosopher *philo)
 	while (i > 1)
 	{
 		cur = cur->left_philo;
+		pthread_mutex_destroy(&cur->right_philo->right_fork->mutex);
 		free(cur->right_philo->right_fork);
 		free(cur->right_philo);
 		--i;
@@ -89,6 +90,7 @@ t_philosopher	*dress_philosophy_table(unsigned long long *params, pthread_mutex_
 		 if (cur->right_fork == NULL)
 		 	return (destroy_philosophers(cur));
 		 cur->right_fork->state = FORK_STATE_UNUSED;
+		 pthread_mutex_init(&cur->right_fork->mutex, NULL);
 		 cur->right_fork->id = i + 1;
 		 if (i > 0)
 		 	cur->left_fork = prev->right_fork;

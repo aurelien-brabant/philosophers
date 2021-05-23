@@ -6,38 +6,30 @@
 #include "philo_one.h"
 #include "lib.h"
 
-bool	are_all_philosophers_alive(t_philosopher *philo)
-{
-	while (1)
-	{
-		if (philo->state == PHILO_STATE_DEAD)
-			return (false);
-		if (philo->id == philo->params[NUMBER_OF_PHILOSOPHERS])
-			break ;
-		philo = philo->right_philo;
-	}
-	return (true);
-}
-
 static void	run_simulation(t_philosopher *philo)
 {
 	size_t	i;
 	pthread_t	philo_watcher_thread;
 	bool		*health_check;
+	bool		*waiting_for_threads;
 
 	i = 0;
 	health_check = malloc(sizeof (*health_check));
+	waiting_for_threads = malloc(sizeof (*waiting_for_threads));
 	*health_check = true;
+	*waiting_for_threads = true;
 	pthread_create(&philo_watcher_thread, NULL, (void *)(void *)&philo_watcher, health_check);
 	while (i < philo->params[NUMBER_OF_PHILOSOPHERS])
 	{
 		philo->state = PHILO_STATE_THINKING;
 		philo->health_check = health_check;
+		philo->waiting_for_threads = waiting_for_threads;
 		pthread_create(&philo->thread, NULL, (void *)(void *)&spawn_philosopher, philo);
 		pthread_detach(philo->thread);
 		philo = philo->right_philo;
 		++i;
 	}
+	*waiting_for_threads = false;
 	pthread_join(philo_watcher_thread, NULL);
 }
 
@@ -63,6 +55,7 @@ int	main(int ac, char **av)
 	if (philo == NULL)
 		return (1);
 	run_simulation(philo);
+	free(philo->health_check);
 	destroy_philosophers(philo->left_philo);
 	destroy_mutexes(mutexes);
 	return (0);
