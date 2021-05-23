@@ -26,6 +26,7 @@ typedef struct s_philosopher
 {
 	pthread_t			thread;
 	pthread_mutex_t		*mutexes;
+	bool					*health_check;
 	unsigned long long	id;
 	unsigned long long	*params;
 	t_philo_state		state;
@@ -41,5 +42,6 @@ void			*destroy_philosophers(t_philosopher *philo);
 void			*spawn_philosopher(t_philosopher *philo);
 t_philosopher	*dress_philosophy_table(unsigned long long *params, pthread_mutex_t *mutexes);
 void			philo_change_state(t_philosopher *philo, t_philo_state new_state);
+void			*philo_watcher(bool *health_check);
 
 #endif

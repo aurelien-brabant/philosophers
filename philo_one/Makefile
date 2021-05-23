@@ -1,6 +1,7 @@
 include ../Makefile.template
 
-SRCS	= $(addprefix src/, main.c setup.c philosopher.c philo_change_state.c)
+SRCS	= $(addprefix src/, main.c setup.c philosopher.c philo_change_state.c \
+			philo_watcher.c)
 OBJS	= $(LIB_OBJS) $(SRCS:%.c=%.o)
 
 LIB_PHILO_PATH	:= ../lib

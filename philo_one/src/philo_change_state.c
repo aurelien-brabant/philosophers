@@ -3,24 +3,6 @@
 
 #include "philo_one.h"
 
-static void	handle_philosopher_death(t_philosopher *philo)
-{
-	t_philosopher	*cur;
-
-	cur = philo;
-	while (cur->id > 1)
-	{
-		cur->state = PHILO_STATE_DEAD;
-		cur = cur->left_philo;
-	}
-	cur = philo;
-	while (cur->id <= philo->params[NUMBER_OF_PHILOSOPHERS])
-	{
-		cur->state = PHILO_STATE_DEAD;
-		cur = cur->left_philo;
-	}
-}
-
 static const char	*get_state_string(t_philo_state state)
 {
 	if (state == PHILO_STATE_EATING)
@@ -37,7 +19,11 @@ static const char	*get_state_string(t_philo_state state)
 void	philo_change_state(t_philosopher *philo, t_philo_state new_state)
 {
 	pthread_mutex_lock(&philo->mutexes[PHILO_ONE_PRINTF_MUTEX]);
+	if (!*philo->health_check)
+		return ;
 	printf("%lldms %lld %s\n", get_timestamp(), philo->id, get_state_string(new_state));	
 	philo->state = new_state;
+	if (philo->state == PHILO_STATE_DEAD)
+		*philo->health_check = false;
 	pthread_mutex_unlock(&philo->mutexes[PHILO_ONE_PRINTF_MUTEX]);
 }

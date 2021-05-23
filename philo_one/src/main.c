@@ -22,20 +22,23 @@ bool	are_all_philosophers_alive(t_philosopher *philo)
 static void	run_simulation(t_philosopher *philo)
 {
 	size_t	i;
+	pthread_t	philo_watcher_thread;
+	bool		*health_check;
 
 	i = 0;
-	get_timestamp();
+	health_check = malloc(sizeof (*health_check));
+	*health_check = true;
+	pthread_create(&philo_watcher_thread, NULL, (void *)(void *)&philo_watcher, health_check);
 	while (i < philo->params[NUMBER_OF_PHILOSOPHERS])
 	{
 		philo->state = PHILO_STATE_THINKING;
+		philo->health_check = health_check;
 		pthread_create(&philo->thread, NULL, (void *)(void *)&spawn_philosopher, philo);
 		pthread_detach(philo->thread);
 		philo = philo->right_philo;
 		++i;
 	}
-	while (are_all_philosophers_alive(philo))
-		;
-	printf("End of simulation\n");
+	pthread_join(philo_watcher_thread, NULL);
 }
 
 static void	destroy_mutexes(pthread_mutex_t *mutexes)

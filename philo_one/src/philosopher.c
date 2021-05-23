@@ -4,7 +4,7 @@
 void	*spawn_philosopher(t_philosopher *philo)
 {
 	philo->last_meal_timestamp = get_timestamp();
-	while (philo->state != PHILO_STATE_DEAD)
+	while (*philo->health_check)
 	{
 		if (get_timestamp() - philo->last_meal_timestamp > philo->params[TIME_TO_DIE])
 			philo_change_state(philo, PHILO_STATE_DEAD);
