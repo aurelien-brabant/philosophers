@@ -21,6 +21,17 @@ void	*spawn_philosopher(t_philosopher *philo)
 	{
 		if (get_timestamp() - philo->last_meal_timestamp > philo->params[TIME_TO_DIE])
 			philo_change_state(philo, PHILO_STATE_DEAD);
+		if (are_forks_available(philo))
+		{
+			if (!take_fork(philo, philo->left_fork) 
+				|| !take_fork(philo, philo->right_fork))
+				continue ;
+			philo_change_state(philo, PHILO_STATE_EATING);
+			philo->last_meal_timestamp = get_timestamp();
+			usleep(philo->params[TIME_TO_EAT] * 1000);
+			drop_fork(philo->left_fork);
+			drop_fork(philo->right_fork);
+		}
 	}
 	return (philo);
 }

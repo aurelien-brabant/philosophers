@@ -50,4 +50,9 @@ t_philosopher	*dress_philosophy_table(unsigned long long *params, pthread_mutex_
 void			philo_change_state(t_philosopher *philo, t_philo_state new_state);
 void			*philo_watcher(bool *health_check);
 
+bool			are_forks_available(t_philosopher *philo);
+bool			take_fork(t_philosopher *philo, t_fork *fork);
+void			drop_fork(t_fork *fork);
+bool			is_fork_available(t_fork *fork);
+
 #endif
