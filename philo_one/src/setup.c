@@ -4,100 +4,73 @@
 #include "philo_one.h"
 
 /*
-** Create the data representation of the philosophers and initialize some
-** cool stuff. The address of the parameters is kept by each philosopher
-** because they will need to access them inside their respective thread.
+** Allocate a new fork and initialize it.
+** A mutex is initialized for each allocated fork.
 */
 
-static t_philosopher	*create_philosophers(unsigned long long *params, pthread_mutex_t *mutexes)
+static t_fork	*fork_new()
 {
-	t_philosopher	*philo;
-	t_philosopher	*head;
-	t_philosopher	*prev;
-	size_t			i;
+	t_fork	*fork;
 
-	i = 0;
-	while (i < params[NUMBER_OF_PHILOSOPHERS])
-	{
-		philo = malloc(sizeof (*philo));
-		if (philo == NULL)
-			return (destroy_philosophers(prev));
-		philo->id = i + 1;
-		philo->params = params;
-		philo->mutexes = mutexes;
-		if (i > 0)
-		{
-			philo->left_philo = prev;
-			philo->left_philo->right_philo = philo;
-		}
-		if (i++ == 0)
-			head = philo;
-		prev = philo;
-	}
-	philo->right_philo = head;
-	head->left_philo = philo;
-	return (head);
+	fork = malloc(sizeof (*fork));
+	if (fork == NULL)
+		return (NULL);
+	fork->state = FORK_STATE_USED;
+	pthread_mutex_init(&fork->mutex, NULL);
+	return (fork);
 }
 
-/*
-** Free memory allocated for philosophers and forks representation.
-** The function takes the last philosopher as an argument: that's a design
-** consideration allowing easy cleanup in some error cases.
-** Anyway, the last philosopher can be accessed using the first one, simply
-** with first_philo->left_philo.
-*/
-
-void	*destroy_philosophers(t_philosopher *philo)
+void	*destroy_philosophers(t_philosopher *philosophers)
 {
-	t_philosopher	*cur;
-	size_t			i;
+	unsigned long long	i;
+	unsigned long long	nb_of_philo;
 
-	cur = philo;
-	if (cur == NULL)
-		return (NULL);
-	i = cur->id;
-	while (i > 1)
+	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
+	i = 0;
+	while (i < nb_of_philo)
 	{
-		cur = cur->left_philo;
-		pthread_mutex_destroy(&cur->right_philo->right_fork->mutex);
-		free(cur->right_philo->right_fork);
-		free(cur->right_philo);
-		--i;
+		pthread_mutex_destroy(&philosophers[i].right_fork->mutex);
+		free(philosophers[i].right_fork);
+		++i;
 	}
-	free(cur->right_fork);
-	free(cur);
+	free(philosophers);
 	return (NULL);
 }
 
 /*
-** Call create_philosophers and create the forks, placing at the right
-** place i.e at the left and right of each philosopher.
+** Initialize the array of philosophers.
+** The number of philosophers is given by the nb_of_philo argument which is
+** parsed from the command line.
+**
+** Forks are allocated and their mutex is initialized.
+**
+** NULL is returned in case of error (malloc failure is the only one possible).
+** Cleanup is automatically handled in case of error.
 */
 
-t_philosopher	*dress_philosophy_table(unsigned long long *params, pthread_mutex_t *mutexes)
+t_philosopher	*philosophers_init(void)
 {
-	t_philosopher		*philo;
-	t_philosopher		*prev;
-	t_philosopher		*cur;
-	size_t				i;
+	t_philosopher	*philosophers;
+	unsigned long long	nb_of_philo;
+	unsigned long long	i;
 
+	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
+	philosophers = malloc(sizeof (*philosophers) * nb_of_philo);
+	if (philosophers == NULL)
+		return (NULL);
 	i = 0;
-	philo = create_philosophers(params, mutexes);
-	cur = philo;
-	while (i < params[NUMBER_OF_PHILOSOPHERS])
+	while (i < nb_of_philo)
 	{
-		 cur->right_fork = malloc(sizeof(t_fork));
-		 if (cur->right_fork == NULL)
-		 	return (destroy_philosophers(cur));
-		 cur->right_fork->state = FORK_STATE_UNUSED;
-		 pthread_mutex_init(&cur->right_fork->mutex, NULL);
-		 cur->right_fork->id = i + 1;
-		 if (i > 0)
-		 	cur->left_fork = prev->right_fork;
-		 prev = cur;
-		 cur = cur->right_philo;
-		 ++i;
+		philosophers[i].right_fork = fork_new();
+		if (philosophers[i].right_fork == NULL)
+			return (destroy_philosophers(philosophers));
+		philosophers[i].id = i + 1;
+		philosophers[i].last_meal_timestamp = 0;
+		philosophers[i].state = PHILO_STATE_DEAD; 
+		if (i > 0)
+			philosophers[i].left_fork = philosophers[i - 1].right_fork;
+		++i;
 	}
-	philo->left_fork = philo->left_philo->right_fork;
-	return (philo);
+	philosophers[0].left_fork = philosophers[i - 1].right_fork;
+	return (philosophers);
 }

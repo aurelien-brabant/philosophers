@@ -44,9 +44,9 @@ typedef struct s_philosopher
 	unsigned long long	last_meal_timestamp;
 }	t_philosopher;
 
+t_philosopher	*philosophers_init(void);
 void			*destroy_philosophers(t_philosopher *philo);
 void			*spawn_philosopher(t_philosopher *philo);
-t_philosopher	*dress_philosophy_table(unsigned long long *params, pthread_mutex_t *mutexes);
 void			philo_change_state(t_philosopher *philo, t_philo_state new_state, unsigned long long *ts);
 void			*philo_watcher(t_philosopher *philo);
 

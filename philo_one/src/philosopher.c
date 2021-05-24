@@ -15,8 +15,8 @@
 
 void	*spawn_philosopher(t_philosopher *philo)
 {
-	//while (*philo->waiting_for_threads)
-		//;
+	while (*philo->waiting_for_threads)
+		;
 	philo_change_state(philo, PHILO_STATE_THINKING, NULL);
 	while (*philo->health_check)
 	{

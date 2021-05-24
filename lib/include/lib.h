@@ -28,7 +28,8 @@ size_t			ft_strlen(const char *s);
 bool			parse_uint(const char *s, unsigned long long *n);
 int				dputs(const char *s, int fd);
 int				error_out(const char *msg, int exit_code);
-bool				parse_params(int ac, char **av, unsigned long long *params);
+bool				parse_params(int ac, char **av);
 unsigned long long	get_timestamp(bool can_initialize);
+unsigned long long	*get_params(void);
 
 #endif

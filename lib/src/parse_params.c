@@ -8,10 +8,12 @@
 ** otherwise.
 */
 
-bool	parse_params(int ac, char **av, unsigned long long *params)
+bool	parse_params(int ac, char **av)
 {
-	t_philo_param	param_id;
+	t_philo_param		param_id;
+	unsigned long long	*params;
 
+	params = get_params();
 	param_id = NUMBER_OF_PHILOSOPHERS;
 	--ac;
 	++av;
