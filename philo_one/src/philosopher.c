@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdio.h>
 
 #include "philo_one.h"
 #include "lib.h"
@@ -14,14 +15,14 @@
 
 void	*spawn_philosopher(t_philosopher *philo)
 {
-	while (*philo->waiting_for_threads)
-		;
-	philo->last_meal_timestamp = 0;
+	//while (*philo->waiting_for_threads)
+		//;
+	philo_change_state(philo, PHILO_STATE_THINKING, NULL);
 	while (*philo->health_check)
 	{
-		if (get_timestamp() - philo->last_meal_timestamp > philo->params[TIME_TO_DIE])
-			philo_change_state(philo, PHILO_STATE_DEAD);
-		if (are_forks_available(philo))
+		/*
+		if (philo->left_philo->state != PHILO_STATE_EATING && philo->right_philo->state != PHILO_STATE_EATING 
+			&& are_forks_available(philo))
 		{
 			if (!take_fork(philo, philo->left_fork) 
 				|| !take_fork(philo, philo->right_fork))
@@ -31,7 +32,9 @@ void	*spawn_philosopher(t_philosopher *philo)
 			usleep(philo->params[TIME_TO_EAT] * 1000);
 			drop_fork(philo->left_fork);
 			drop_fork(philo->right_fork);
+			philo_change_state(philo, PHILO_STATE_THINKING);
 		}
+		*/
 	}
 	return (philo);
 }

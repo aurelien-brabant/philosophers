@@ -11,7 +11,7 @@ typedef enum e_fork_state
 
 typedef enum e_philo_one_mutex
 {
-	PHILO_ONE_PRINTF_MUTEX = 0,
+	PHILO_ONE_STATE_MUTEX = 0,
 	PHILO_ONE_TOTAL_MUTEX
 
 }	t_philo_one_mutex;
@@ -47,8 +47,8 @@ typedef struct s_philosopher
 void			*destroy_philosophers(t_philosopher *philo);
 void			*spawn_philosopher(t_philosopher *philo);
 t_philosopher	*dress_philosophy_table(unsigned long long *params, pthread_mutex_t *mutexes);
-void			philo_change_state(t_philosopher *philo, t_philo_state new_state);
-void			*philo_watcher(bool *health_check);
+void			philo_change_state(t_philosopher *philo, t_philo_state new_state, unsigned long long *ts);
+void			*philo_watcher(t_philosopher *philo);
 
 bool			are_forks_available(t_philosopher *philo);
 bool			take_fork(t_philosopher *philo, t_fork *fork);

@@ -29,7 +29,7 @@ bool	take_fork(t_philosopher *philo, t_fork *fork)
 		ret = false;
 	else
 	{
-		printf("%lldms %lld has taken a fork\n", get_timestamp(), philo->id);
+		printf("%lldms %lld has taken a fork\n", get_timestamp(true), philo->id);
 		fork->state = FORK_STATE_USED;
 	}
 	pthread_mutex_unlock(&fork->mutex);	
