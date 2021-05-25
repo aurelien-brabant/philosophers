@@ -25,7 +25,7 @@ static void	terminate_philo_threads(t_philosopher *philosophers)
 	}
 }
 
-static void	run_simulation(t_philosopher *philosophers, pthread_mutex_t *mutexes)
+static void	run_simulation(t_philosopher *philosophers)
 {
 	pthread_t	philo_watcher_thread;
 	bool		*health_check;
@@ -41,7 +41,6 @@ static void	run_simulation(t_philosopher *philosophers, pthread_mutex_t *mutexes
 	i = 0;
 	while (i < nb_of_philo)
 	{
-		philosophers[i].mutexes = mutexes;
 		philosophers[i].health_check = health_check;
 		philosophers[i].waiting_for_threads = waiting_for_threads;
 		pthread_create(&philosophers[i].thread, NULL, (void *)(void *)&spawn_philosopher, &philosophers[i]);
@@ -53,28 +52,40 @@ static void	run_simulation(t_philosopher *philosophers, pthread_mutex_t *mutexes
 	terminate_philo_threads(philosophers);
 }
 
-static void	destroy_mutexes(pthread_mutex_t *mutexes)
+static void	destroy_mutexes(void)
 {
-	size_t	i;
+	size_t			i;
+	pthread_mutex_t	*mutexes;
 
 	i = 0;
+	mutexes = get_mutexes();
 	while (i < PHILO_ONE_TOTAL_MUTEX)
 		pthread_mutex_destroy(&mutexes[i++]);
 }
 
+static void	init_mutexes(void)
+{
+	size_t			i;
+	pthread_mutex_t	*mutexes;
+
+	i = 0;
+	mutexes = get_mutexes();
+	while (i < PHILO_ONE_TOTAL_MUTEX)
+		pthread_mutex_init(&mutexes[i++], NULL);
+}
+
 int	main(int ac, char **av)
 {
-	pthread_mutex_t		mutexes[PHILO_ONE_TOTAL_MUTEX];
 	t_philosopher		*philosophers;
 	
 	if (!parse_params(ac, av))
 		return (1);
-	pthread_mutex_init(&mutexes[PHILO_ONE_STATE_MUTEX], NULL);
 	philosophers = philosophers_init();
 	if (philosophers == NULL)
 		return (1);
-	run_simulation(philosophers, mutexes);
+	init_mutexes();
+	run_simulation(philosophers);
 	destroy_philosophers(philosophers);
-	destroy_mutexes(mutexes);
+	destroy_mutexes();
 	return (0);
 }

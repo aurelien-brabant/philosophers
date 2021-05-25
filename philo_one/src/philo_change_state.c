@@ -16,19 +16,17 @@ static const char	*get_state_string(t_philo_state state)
 	return (NULL);
 }
 
-void	philo_change_state(t_philosopher *philo, t_philo_state new_state, unsigned long long *ts)
-{
-	unsigned long long	timestamp;
+/*
+** Change the current state of a philosopher, outputing the change on STDOUT.
+*/
 
-	pthread_mutex_lock(&philo->mutexes[PHILO_ONE_STATE_MUTEX]);
+void	philo_change_state(t_philosopher *philo, t_philo_state new_state)
+{
+	pthread_mutex_lock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
 	if (*philo->health_check)
 	{
-		if (ts != NULL)
-			timestamp = *ts;
-		else
-			timestamp = get_timestamp(true);
-		printf("%lldms %lld %s\n", timestamp, philo->id, get_state_string(new_state));	
+		printf("%lldms %lld %s\n", get_timestamp(true), philo->id, get_state_string(new_state));	
 		philo->state = new_state;
 	}
-	pthread_mutex_unlock(&philo->mutexes[PHILO_ONE_STATE_MUTEX]);
+	pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
 }

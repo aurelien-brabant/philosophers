@@ -15,7 +15,7 @@ static t_fork	*fork_new()
 	fork = malloc(sizeof (*fork));
 	if (fork == NULL)
 		return (NULL);
-	fork->state = FORK_STATE_USED;
+	fork->state = FORK_STATE_UNUSED;
 	pthread_mutex_init(&fork->mutex, NULL);
 	return (fork);
 }
@@ -66,7 +66,7 @@ t_philosopher	*philosophers_init(void)
 			return (destroy_philosophers(philosophers));
 		philosophers[i].id = i + 1;
 		philosophers[i].last_meal_timestamp = 0;
-		philosophers[i].state = PHILO_STATE_DEAD; 
+		philosophers[i].state = PHILO_STATE_THINKING; 
 		if (i > 0)
 			philosophers[i].left_fork = philosophers[i - 1].right_fork;
 		++i;

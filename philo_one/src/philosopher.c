@@ -15,26 +15,29 @@
 
 void	*spawn_philosopher(t_philosopher *philo)
 {
+	unsigned long long	time_to_eat;
+	unsigned long long	time_to_sleep;
+
+	time_to_eat = get_params()[TIME_TO_EAT];
+	time_to_sleep = get_params()[TIME_TO_SLEEP];
 	while (*philo->waiting_for_threads)
 		;
-	philo_change_state(philo, PHILO_STATE_THINKING, NULL);
 	while (*philo->health_check)
 	{
-		/*
-		if (philo->left_philo->state != PHILO_STATE_EATING && philo->right_philo->state != PHILO_STATE_EATING 
-			&& are_forks_available(philo))
+		if (philo->left_fork->state == FORK_STATE_UNUSED
+			&& philo->right_fork->state == FORK_STATE_UNUSED)
 		{
-			if (!take_fork(philo, philo->left_fork) 
-				|| !take_fork(philo, philo->right_fork))
-				continue ;
-			philo_change_state(philo, PHILO_STATE_EATING);
-			philo->last_meal_timestamp = get_timestamp();
-			usleep(philo->params[TIME_TO_EAT] * 1000);
-			drop_fork(philo->left_fork);
-			drop_fork(philo->right_fork);
-			philo_change_state(philo, PHILO_STATE_THINKING);
+			if (take_fork(philo, philo->left_fork) && take_fork(philo, philo->right_fork))
+			{
+				philo_change_state(philo, PHILO_STATE_EATING);
+				usleep(time_to_eat * 1000);
+				drop_fork(philo->left_fork);
+				drop_fork(philo->right_fork);
+				philo_change_state(philo, PHILO_STATE_SLEEPING);
+				usleep(time_to_sleep * 1000);
+			}
 		}
-		*/
+		usleep(100);
 	}
 	return (philo);
 }
