@@ -25,12 +25,12 @@ bool	take_fork(t_philosopher *philo, t_fork *fork)
 
 	ret = true;
 	pthread_mutex_lock(&fork->mutex);	
-	if (fork->state == FORK_STATE_USED)
+	if (fork->owner)
 		ret = false;
 	else
 	{
 		printf("%lldms %lld has taken a fork\n", get_timestamp(true), philo->id);
-		fork->state = FORK_STATE_USED;
+		fork->owner = philo->id;
 	}
 	pthread_mutex_unlock(&fork->mutex);	
 	return (ret);
@@ -39,6 +39,6 @@ bool	take_fork(t_philosopher *philo, t_fork *fork)
 void	drop_fork(t_fork *fork)
 {
 	pthread_mutex_lock(&fork->mutex);	
-	fork->state = FORK_STATE_UNUSED;
+	fork->owner = FORK_NOT_OWNED;
 	pthread_mutex_unlock(&fork->mutex);	
 }

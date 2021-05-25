@@ -16,6 +16,7 @@ static t_fork	*fork_new()
 	if (fork == NULL)
 		return (NULL);
 	fork->state = FORK_STATE_UNUSED;
+	fork->owner = FORK_NOT_OWNED;
 	pthread_mutex_init(&fork->mutex, NULL);
 	return (fork);
 }
@@ -62,6 +63,7 @@ t_philosopher	*philosophers_init(void)
 	while (i < nb_of_philo)
 	{
 		philosophers[i].right_fork = fork_new();
+		philosophers[i].right_fork->id = i + 1;
 		if (philosophers[i].right_fork == NULL)
 			return (destroy_philosophers(philosophers));
 		philosophers[i].id = i + 1;

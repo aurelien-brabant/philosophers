@@ -6,7 +6,8 @@
 typedef enum e_fork_state
 {
 	FORK_STATE_UNUSED = 0,
-	FORK_STATE_USED
+	FORK_STATE_USED,
+	FORK_NOT_OWNED,
 }	t_fork_state;
 
 typedef enum e_philo_one_mutex
@@ -19,6 +20,7 @@ typedef enum e_philo_one_mutex
 typedef struct s_fork
 {
 	t_fork_state		state;
+	unsigned long long	owner;
 	unsigned long long	id;
 	pthread_mutex_t		mutex;
 }	t_fork;
@@ -30,17 +32,12 @@ typedef struct s_fork
 typedef struct s_philosopher
 {
 	pthread_t			thread;
-	pthread_mutex_t		*mutexes;
 	bool					*health_check;
 	bool					*waiting_for_threads;
 	unsigned long long	id;
-	unsigned long long	*params;
 	t_philo_state		state;
 	t_fork				*left_fork;
 	t_fork				*right_fork;
-	struct s_philosopher	*left_philo;
-	struct s_philosopher	*right_philo;
-
 	unsigned long long	last_meal_timestamp;
 }	t_philosopher;
 
