@@ -15,7 +15,6 @@ static t_fork	*fork_new()
 	fork = malloc(sizeof (*fork));
 	if (fork == NULL)
 		return (NULL);
-	fork->state = FORK_STATE_UNUSED;
 	fork->owner = FORK_NOT_OWNED;
 	pthread_mutex_init(&fork->mutex, NULL);
 	return (fork);

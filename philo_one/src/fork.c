@@ -13,9 +13,7 @@ bool	is_fork_available(t_fork *fork)
 {
 	bool	available;
 
-	pthread_mutex_lock(&fork->mutex);	
-	available = (fork->state == FORK_STATE_UNUSED);
-	pthread_mutex_unlock(&fork->mutex);	
+	available = (!fork->owner);
 	return (available);
 }
 

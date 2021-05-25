@@ -2,13 +2,7 @@
 # define PHILO_ONE_H
 # include <pthread.h>
 # include "lib.h"
-
-typedef enum e_fork_state
-{
-	FORK_STATE_UNUSED = 0,
-	FORK_STATE_USED,
-	FORK_NOT_OWNED,
-}	t_fork_state;
+# define FORK_NOT_OWNED 0
 
 typedef enum e_philo_one_mutex
 {
@@ -19,7 +13,6 @@ typedef enum e_philo_one_mutex
 
 typedef struct s_fork
 {
-	t_fork_state		state;
 	unsigned long long	owner;
 	unsigned long long	id;
 	pthread_mutex_t		mutex;
