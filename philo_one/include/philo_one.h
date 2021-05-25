@@ -7,6 +7,7 @@
 typedef enum e_philo_one_mutex
 {
 	PHILO_ONE_STATE_MUTEX = 0,
+	PHILO_ONE_ARBITRATOR_MUTEX,
 	PHILO_ONE_TOTAL_MUTEX
 
 }	t_philo_one_mutex;
@@ -46,5 +47,6 @@ void				drop_fork(t_fork *fork);
 bool				is_fork_available(t_fork *fork);
 
 pthread_mutex_t	*get_mutexes(void);
+t_philosopher   	*get_philosophers(void);
 
 #endif

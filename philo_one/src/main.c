@@ -80,7 +80,7 @@ int	main(int ac, char **av)
 	
 	if (!parse_params(ac, av))
 		return (1);
-	philosophers = philosophers_init();
+	philosophers = get_philosophers();
 	if (philosophers == NULL)
 		return (1);
 	init_mutexes();
