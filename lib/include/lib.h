@@ -24,12 +24,15 @@ typedef enum e_philo_state
 	PHILO_STATE_THINKING,
 }	t_philo_state;
 
+typedef unsigned long long int t_timestamp;
+
 size_t			ft_strlen(const char *s);
 bool			parse_uint(const char *s, unsigned long long *n);
 int				dputs(const char *s, int fd);
 int				error_out(const char *msg, int exit_code);
 bool				parse_params(int ac, char **av);
-unsigned long long	get_timestamp(bool can_initialize);
+t_timestamp 		get_timestamp(void);
 unsigned long long	*get_params(void);
+void			ft_usleep(unsigned long long ms);
 
 #endif

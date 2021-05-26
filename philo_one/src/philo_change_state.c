@@ -25,7 +25,7 @@ void	philo_change_state(t_philosopher *philo, t_philo_state new_state)
 	pthread_mutex_lock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
 	if (*philo->health_check)
 	{
-		printf("%lldms %lld %s\n", get_timestamp(true), philo->id, get_state_string(new_state));	
+		printf("%lldms %lld %s\n", get_timestamp(), philo->id, get_state_string(new_state));	
 		philo->state = new_state;
 	}
 	pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);

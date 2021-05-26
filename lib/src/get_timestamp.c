@@ -2,19 +2,23 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-unsigned long long	get_timestamp(bool can_initialize)
+#include "lib.h"
+
+/*
+** Get the current timestamp.
+** The initial timestamp is kept internally in a static variable, and is
+** initialized when the first call to get_timestamp is issued.
+*/
+
+t_timestamp	get_timestamp(void)
 {
-	static unsigned long long	initial_timestamp = 0;
-	unsigned long long			timestamp;
+	static t_timestamp	initial_ts = 0;
+	t_timestamp			current_ts;		
 	struct timeval				tval;
 	
 	gettimeofday(&tval, NULL);
-	timestamp = tval.tv_sec * 1000 + tval.tv_usec / 1000; 
-	if (initial_timestamp == 0)
-	{
-		if (can_initialize)
-			initial_timestamp = timestamp;
-		return (0);
-	}
-	return (timestamp - initial_timestamp);
+	current_ts = tval.tv_sec * 1000 + tval.tv_usec / 1000; 
+	if (initial_ts == 0)
+		initial_ts = current_ts;
+	return (current_ts - initial_ts);
 }

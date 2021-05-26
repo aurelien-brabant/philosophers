@@ -1,3 +1,4 @@
 .cache
 test
 *.o
+a.out

@@ -52,11 +52,11 @@ void	*spawn_philosopher(t_philosopher *philo)
 		if (is_ready_to_eat(philo))
 		{
 			philo_change_state(philo, PHILO_STATE_EATING);
-			philo->last_meal_timestamp = get_timestamp(true);
-			usleep(time_to_eat * 1000);
+			philo->last_meal_timestamp = get_timestamp();
+			ft_usleep(time_to_eat);
 			drop_forks(philo);
 			philo_change_state(philo, PHILO_STATE_SLEEPING);
-			usleep(time_to_sleep * 1000);
+			ft_usleep(time_to_sleep);
 		}
 	}
 	return (philo);
