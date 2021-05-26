@@ -23,11 +23,13 @@ bool	take_fork(t_philosopher *philo, t_fork *fork)
 
 	ret = true;
 	pthread_mutex_lock(&fork->mutex);	
-	if (!fork->owner)
+	pthread_mutex_lock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);	
+	if (*philo->health_check && !fork->owner)
 	{
 		printf("%lldms %lld has taken a fork\n", get_timestamp(), philo->id);
 		fork->owner = philo->id;
 	}
+	pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);	
 	pthread_mutex_unlock(&fork->mutex);	
 	return (ret);
 }

@@ -23,7 +23,7 @@ void	*philo_watcher(t_philosopher *philosophers)
 		if (++i == philo_nb)
 		{
 			i = 0;
-			//usleep(1000);
+			usleep(1000);
 		}
 	}
 	return (philosophers);
