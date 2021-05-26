@@ -53,6 +53,7 @@ void	*spawn_philosopher(t_philosopher *philo)
 		{
 			philo_change_state(philo, PHILO_STATE_EATING);
 			philo->last_meal_timestamp = get_timestamp();
+			philo->eat_count++;
 			ft_usleep(time_to_eat);
 			drop_forks(philo);
 			philo_change_state(philo, PHILO_STATE_SLEEPING);

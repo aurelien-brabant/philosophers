@@ -32,7 +32,8 @@ typedef struct s_philosopher
 	t_philo_state		state;
 	t_fork				*left_fork;
 	t_fork				*right_fork;
-	unsigned long long	last_meal_timestamp;
+	t_timestamp		last_meal_timestamp;
+	unsigned long long	eat_count;
 }	t_philosopher;
 
 t_philosopher		*philosophers_init(void);

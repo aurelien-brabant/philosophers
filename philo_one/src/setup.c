@@ -68,6 +68,7 @@ t_philosopher	*philosophers_init(void)
 		philosophers[i].id = i + 1;
 		philosophers[i].last_meal_timestamp = 0;
 		philosophers[i].state = PHILO_STATE_THINKING; 
+		philosophers[i].eat_count = 0;
 		if (i > 0)
 			philosophers[i].left_fork = philosophers[i - 1].right_fork;
 		++i;
