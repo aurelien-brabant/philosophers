@@ -3,38 +3,25 @@
 #include "lib.h"
 #include "philo_one.h"
 
-/*
-** Allocate a new fork and initialize it.
-** A mutex is initialized for each allocated fork.
-*/
-
-static t_fork	*fork_new()
+t_fork	*forks_init(void)
 {
-	t_fork	*fork;
-
-	fork = malloc(sizeof (*fork));
-	if (fork == NULL)
-		return (NULL);
-	fork->owner = FORK_NOT_OWNED;
-	pthread_mutex_init(&fork->mutex, NULL);
-	return (fork);
-}
-
-void	*destroy_philosophers(t_philosopher *philosophers)
-{
+	t_fork				*forks;
 	unsigned long long	i;
 	unsigned long long	nb_of_philo;
 
 	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
+	forks = malloc(sizeof(*forks) * nb_of_philo);
+	if (forks == NULL)
+		return (NULL);
 	i = 0;
 	while (i < nb_of_philo)
 	{
-		pthread_mutex_destroy(&philosophers[i].right_fork->mutex);
-		free(philosophers[i].right_fork);
+		forks[i].id = i + 1;
+		forks[i].owner = FORK_NOT_OWNED;
+		pthread_mutex_init(&forks[i].mutex, NULL);
 		++i;
 	}
-	free(philosophers);
-	return (NULL);
+	return (forks);
 }
 
 /*
@@ -61,18 +48,11 @@ t_philosopher	*philosophers_init(void)
 	i = 0;
 	while (i < nb_of_philo)
 	{
-		philosophers[i].right_fork = fork_new();
-		philosophers[i].right_fork->id = i + 1;
-		if (philosophers[i].right_fork == NULL)
-			return (destroy_philosophers(philosophers));
 		philosophers[i].id = i + 1;
 		philosophers[i].last_meal_timestamp = 0;
 		philosophers[i].state = PHILO_STATE_THINKING; 
 		philosophers[i].eat_count = 0;
-		if (i > 0)
-			philosophers[i].left_fork = philosophers[i - 1].right_fork;
 		++i;
 	}
-	philosophers[0].left_fork = philosophers[i - 1].right_fork;
 	return (philosophers);
 }

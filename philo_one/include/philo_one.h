@@ -28,15 +28,16 @@ typedef struct s_philosopher
 	pthread_t			thread;
 	bool					*health_check;
 	bool					*waiting_for_threads;
+	bool					*synced;
 	unsigned long long	id;
 	t_philo_state		state;
-	t_fork				*left_fork;
-	t_fork				*right_fork;
+	t_fork				*forks;
 	t_timestamp		last_meal_timestamp;
 	unsigned long long	eat_count;
 }	t_philosopher;
 
 t_philosopher		*philosophers_init(void);
+t_fork			*forks_init(void);
 void				*destroy_philosophers(t_philosopher *philo);
 void				*spawn_philosopher(t_philosopher *philo);
 void				philo_change_state(t_philosopher *philo, t_philo_state new_state);

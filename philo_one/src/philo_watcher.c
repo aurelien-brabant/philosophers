@@ -25,6 +25,21 @@ static bool	is_philosopher_healthy(t_philosopher *philo)
 }
 
 /*
+static void	check_sync(t_philosopher *philosophers)
+{
+	unsigned long long	i;
+
+	i = 0;
+	while (i < get_params()[NUMBER_OF_PHILOSOPHERS])
+	{
+		if (i == 0)
+		i += 2;	
+	}
+	*philosophers[0].synced = true;
+}
+*/
+
+/*
 ** philo_watcher
 **
 ** The watcher is represented by a seperated thread, which is constantly
@@ -51,6 +66,8 @@ void	*philo_watcher(t_philosopher *philosophers)
 	i = 0;
 	while (1)
 	{
+		/*if (!*philosophers[0].synced)
+			check_sync(philosophers);*/
 		if (!is_philosopher_healthy(&philosophers[i]))
 			break ;
 		if (philosophers[i].eat_count >= get_params()[NUMBER_OF_TIMES_EACH_PHILOSOPHER_MUST_EAT])

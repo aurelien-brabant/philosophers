@@ -4,28 +4,28 @@
 #include "philo_one.h"
 #include "lib.h"
 
-static void	try_to_take_forks(t_philosopher *philo)
+static bool	try_to_pick_forks(t_philosopher *philo, t_fork *left_fork, t_fork *right_fork)
 {
+	bool	ret;
+
+	ret = false;
 	pthread_mutex_lock(&get_mutexes()[PHILO_ONE_ARBITRATOR_MUTEX]);
-	if (!philo->left_fork->owner && !philo->right_fork->owner)
+	if (*philo->health_check && !left_fork->owner && !right_fork->owner)
 	{
-		take_fork(philo, philo->left_fork);
-		take_fork(philo, philo->right_fork);
+		take_fork(philo, left_fork);
+		take_fork(philo, right_fork);
+		ret = true;
 	}
 	pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_ARBITRATOR_MUTEX]);
+	return (ret);
 }
 
-static void	drop_forks(t_philosopher *philo)
+static void	drop_forks(t_fork *left_fork, t_fork *right_fork)
 {
-	pthread_mutex_lock(&get_mutexes()[PHILO_ONE_ARBITRATOR_MUTEX]);
-	drop_fork(philo->left_fork);
-	drop_fork(philo->right_fork);
-	pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_ARBITRATOR_MUTEX]);
-}
-
-static bool	is_ready_to_eat(t_philosopher *philo)
-{
-	return (philo->left_fork->owner == philo->id && philo->right_fork->owner == philo->id);
+	//pthread_mutex_lock(&get_mutexes()[PHILO_ONE_ARBITRATOR_MUTEX]);
+	drop_fork(left_fork);
+	drop_fork(right_fork);
+	//pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_ARBITRATOR_MUTEX]);
 }
 
 /*
@@ -41,26 +41,30 @@ void	*spawn_philosopher(t_philosopher *philo)
 {
 	unsigned long long	time_to_eat;
 	unsigned long long	time_to_sleep;
+	t_fork				*left_fork;
+	t_fork				*right_fork;
 
 	time_to_eat = get_params()[TIME_TO_EAT];
 	time_to_sleep = get_params()[TIME_TO_SLEEP];
+	left_fork = &philo->forks[philo->id - 1];
+	right_fork = &philo->forks[philo->id % get_params()[NUMBER_OF_PHILOSOPHERS]];
 	while (*philo->waiting_for_threads)
-		;	
-	usleep((philo->id % 2 == 0) * 100);
+		usleep(10);
 	while (*philo->health_check)
 	{
-		try_to_take_forks(philo);
-		if (is_ready_to_eat(philo))
+		if (left_fork->owner || right_fork->owner)
+			usleep(100);
+		else if (try_to_pick_forks(philo, left_fork, right_fork))
 		{
 			philo_change_state(philo, PHILO_STATE_EATING);
 			philo->last_meal_timestamp = get_timestamp();
 			philo->eat_count++;
-			ft_usleep(time_to_eat);
-			drop_forks(philo);
+			usleep(time_to_eat * 1000);
+			drop_forks(left_fork, right_fork);
 			philo_change_state(philo, PHILO_STATE_SLEEPING);
-			ft_usleep(time_to_sleep);
+			usleep(time_to_sleep * 1000);
 			philo_change_state(philo, PHILO_STATE_THINKING);
-		}
+		} 
 	}
 	return (philo);
 }
