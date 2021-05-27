@@ -4,6 +4,7 @@
 #include "philo_one.h"
 #include "lib.h"
 
+/*
 static bool	try_to_pick_forks(t_philosopher *philo, t_fork *left_fork, t_fork *right_fork)
 {
 	bool	ret;
@@ -27,6 +28,7 @@ static void	drop_forks(t_fork *left_fork, t_fork *right_fork)
 	drop_fork(right_fork);
 	//pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_ARBITRATOR_MUTEX]);
 }
+*/
 
 /*
 ** Spawn a philosopher, making him live until he spends time_to_die ms without
@@ -39,30 +41,12 @@ static void	drop_forks(t_fork *left_fork, t_fork *right_fork)
 
 void	*spawn_philosopher(t_philosopher *philo)
 {
-	unsigned long long	time_to_eat;
-	unsigned long long	time_to_sleep;
-	t_fork				*left_fork;
-	t_fork				*right_fork;
-
-	time_to_eat = get_params()[TIME_TO_EAT];
-	time_to_sleep = get_params()[TIME_TO_SLEEP];
-	left_fork = &philo->forks[philo->id - 1];
-	right_fork = &philo->forks[philo->id % get_params()[NUMBER_OF_PHILOSOPHERS]];
 	while (*philo->health_check)
 	{
-		if (try_to_pick_forks(philo, left_fork, right_fork))
-		{
-			philo_change_state(philo, PHILO_STATE_EATING);
-			philo->last_meal_timestamp = get_timestamp();
-			philo->eat_count++;
-			ft_usleep(time_to_eat);
-			drop_forks(left_fork, right_fork);
-			philo_change_state(philo, PHILO_STATE_SLEEPING);
-			ft_usleep(time_to_sleep);
-			philo_change_state(philo, PHILO_STATE_THINKING);
-		}
-		else
-			usleep(100);
+		philo_routine_eat(philo);
+		philo_routine_sleep(philo);
+		philo_routine_think(philo);
+		usleep(100);
 	}
 	return (philo);
 }

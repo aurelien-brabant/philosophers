@@ -52,4 +52,12 @@ pthread_mutex_t	*get_mutexes(void);
 t_philosopher   	*get_philosophers(void);
 void			output_status(const char *status, t_philosopher *philo);
 
+/*
+** ROUTINES
+*/
+
+void	philo_routine_think(t_philosopher *philo);
+void	philo_routine_sleep(t_philosopher *philo);
+void	philo_routine_eat(t_philosopher *philo);
+
 #endif
