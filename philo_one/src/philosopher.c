@@ -49,20 +49,18 @@ void	*spawn_philosopher(t_philosopher *philo)
 	left_fork = &philo->forks[philo->id - 1];
 	right_fork = &philo->forks[philo->id % get_params()[NUMBER_OF_PHILOSOPHERS]];
 	while (*philo->waiting_for_threads)
-		usleep(10);
+		;
 	while (*philo->health_check)
 	{
-		if (left_fork->owner || right_fork->owner)
-			usleep(100);
-		else if (try_to_pick_forks(philo, left_fork, right_fork))
+		if (try_to_pick_forks(philo, left_fork, right_fork))
 		{
 			philo_change_state(philo, PHILO_STATE_EATING);
 			philo->last_meal_timestamp = get_timestamp();
 			philo->eat_count++;
-			usleep(time_to_eat * 1000);
+			ft_usleep(time_to_eat);
 			drop_forks(left_fork, right_fork);
 			philo_change_state(philo, PHILO_STATE_SLEEPING);
-			usleep(time_to_sleep * 1000);
+			ft_usleep(time_to_sleep);
 			philo_change_state(philo, PHILO_STATE_THINKING);
 		} 
 	}
