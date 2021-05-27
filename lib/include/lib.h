@@ -34,5 +34,6 @@ bool				parse_params(int ac, char **av);
 t_timestamp 		get_timestamp(void);
 unsigned long long	*get_params(void);
 void			ft_usleep(unsigned long long ms);
+const char	*get_state_string(t_philo_state state);
 
 #endif

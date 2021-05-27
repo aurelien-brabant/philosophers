@@ -21,9 +21,7 @@ bool	take_fork(t_philosopher *philo, t_fork *fork)
 	{
 		ret = true;
 		fork->owner = philo->id;
-		pthread_mutex_lock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
-		printf("%lldms %lld has taken a fork\n", get_timestamp(), philo->id);
-		pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
+		output_status(" has taken a fork\n", philo->id);
 	}
 	pthread_mutex_unlock(&fork->mutex);	
 	return (ret);
