@@ -48,8 +48,6 @@ void	*spawn_philosopher(t_philosopher *philo)
 	time_to_sleep = get_params()[TIME_TO_SLEEP];
 	left_fork = &philo->forks[philo->id - 1];
 	right_fork = &philo->forks[philo->id % get_params()[NUMBER_OF_PHILOSOPHERS]];
-	while (*philo->waiting_for_threads)
-		;
 	while (*philo->health_check)
 	{
 		if (try_to_pick_forks(philo, left_fork, right_fork))
@@ -62,7 +60,9 @@ void	*spawn_philosopher(t_philosopher *philo)
 			philo_change_state(philo, PHILO_STATE_SLEEPING);
 			ft_usleep(time_to_sleep);
 			philo_change_state(philo, PHILO_STATE_THINKING);
-		} 
+		}
+		else
+			usleep(100);
 	}
 	return (philo);
 }

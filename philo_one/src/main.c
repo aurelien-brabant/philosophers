@@ -50,18 +50,14 @@ static void	run_simulation(t_philosopher *philosophers, t_fork *forks)
 	while (i < nb_of_philo)
 	{
 		pthread_create(&philosophers[i].thread, NULL, (void *)(void *)&spawn_philosopher, &philosophers[i]);
-		++i;
+		i += 2;
 	}
-	*waiting_for_threads = false;
-
-	/*
 	i = 1;
 	while (i < nb_of_philo)
 	{
 		pthread_create(&philosophers[i].thread, NULL, (void *)(void *)&spawn_philosopher, &philosophers[i]);
 		i += 2;
 	}
-	*/
 	pthread_create(&philo_watcher_thread, NULL, (void *)(void *)&philo_watcher, philosophers);
 	pthread_join(philo_watcher_thread, NULL);
 	terminate_philo_threads(philosophers);
