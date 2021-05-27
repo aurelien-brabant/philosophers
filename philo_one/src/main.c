@@ -32,7 +32,7 @@ static void	run_simulation(t_philosopher *philosophers, t_fork *forks)
 	unsigned long long nb_of_philo;
 	unsigned long long	i;
 
-	output_status(NULL, 0);
+	output_status(NULL, NULL);
 	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
 	health_check = malloc(sizeof (*health_check));
 	waiting_for_threads = malloc(sizeof (*waiting_for_threads));

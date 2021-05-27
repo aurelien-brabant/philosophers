@@ -24,9 +24,6 @@ static const char	*get_state_string(t_philo_state state)
 
 void	philo_change_state(t_philosopher *philo, t_philo_state new_state)
 {
-	if (*philo->health_check)
-	{
-		output_status(get_state_string(new_state), philo->id);	
-		philo->state = new_state;
-	}
+	output_status(get_state_string(new_state), philo);	
+	philo->state = new_state;
 }

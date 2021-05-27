@@ -50,6 +50,6 @@ bool				is_fork_available(t_fork *fork);
 
 pthread_mutex_t	*get_mutexes(void);
 t_philosopher   	*get_philosophers(void);
-void			output_status(const char *status, unsigned long long id);
+void			output_status(const char *status, t_philosopher *philo);
 
 #endif

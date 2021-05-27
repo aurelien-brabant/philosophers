@@ -41,20 +41,23 @@ void	concat_str(char **buf, const char *s)
 	}
 }
 
-void	output_status(const char *status, unsigned long long id)
+void	output_status(const char *status, t_philosopher *philo)
 {
 	static char		buf[100000];
 	char				*buf_pos;
 	
-	if (id == 0)
+	if (philo == NULL)
 		return ;
 	buf_pos = buf;
 	pthread_mutex_lock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
-	concat_int(&buf_pos, get_timestamp());
-	concat_str(&buf_pos, "ms ");
-	concat_int(&buf_pos, id);
-	concat_str(&buf_pos, status);
-	*buf_pos = '\0';
-	write(STDOUT_FILENO, buf, ft_strlen(buf));
+	if (*philo->health_check)
+	{
+		concat_int(&buf_pos, get_timestamp());
+		concat_str(&buf_pos, "ms ");
+		concat_int(&buf_pos, philo->id);
+		concat_str(&buf_pos, status);
+		*buf_pos = '\0';
+		write(STDOUT_FILENO, buf, ft_strlen(buf));
+	}
 	pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
 }
