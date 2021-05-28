@@ -24,7 +24,7 @@ static void	terminate_philo_threads(t_philosopher *philosophers)
 	}
 }
 
-static void	run_simulation(t_philosopher *philosophers, t_fork *forks)
+static void	run_simulation(t_philosopher *philosophers)
 {
 	pthread_t	philo_watcher_thread;
 	bool		*health_check;
@@ -41,7 +41,6 @@ static void	run_simulation(t_philosopher *philosophers, t_fork *forks)
 	i = 0;
 	while (i < nb_of_philo)
 	{
-		philosophers[i].forks = forks;
 		philosophers[i].health_check = health_check;
 		philosophers[i].waiting_for_threads = waiting_for_threads;
 		++i;
@@ -89,20 +88,16 @@ static void	init_mutexes(void)
 int	main(int ac, char **av)
 {
 	t_philosopher		*philosophers;
-	t_fork				*forks;
 	
 	if (!parse_params(ac, av))
 		return (1);
-	forks = forks_init();
-	if (forks == NULL)
-		return (1);
-	philosophers = philosophers_init(forks);
+	philosophers = philosophers_init();
 	if (philosophers == NULL)
 		return (1);
 	init_mutexes();
-	run_simulation(philosophers, forks);
+	run_simulation(philosophers);
+	free(philosophers[0].forks);
 	free(philosophers);
-	free(forks);
 	destroy_mutexes();
 	return (0);
 }
