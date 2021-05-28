@@ -66,8 +66,6 @@ void	*philo_watcher(t_philosopher *philosophers)
 	i = 0;
 	while (1)
 	{
-		/*if (!*philosophers[0].synced)
-			check_sync(philosophers);*/
 		if (!is_philosopher_healthy(&philosophers[i]))
 			break ;
 		if (philosophers[i].eat_count >= get_params()[NUMBER_OF_TIMES_EACH_PHILOSOPHER_MUST_EAT])

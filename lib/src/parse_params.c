@@ -1,3 +1,5 @@
+#include <limits.h>
+
 #include "lib.h"
 
 /*
@@ -27,5 +29,7 @@ bool	parse_params(int ac, char **av)
 			return (error_out("Error during parsing of command line arguments", false));
 		++param_id;
 	}
+	if (ac < 5)
+		params[NUMBER_OF_TIMES_EACH_PHILOSOPHER_MUST_EAT] = ULLONG_MAX;
 	return (true);
 }
