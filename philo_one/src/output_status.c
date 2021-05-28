@@ -52,8 +52,9 @@ void	output_status(const char *status, t_philosopher *philo)
 	pthread_mutex_lock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
 	if (*philo->health_check)
 	{
+		concat_str(&buf_pos, "\033[1;40m");
 		concat_int(&buf_pos, get_timestamp());
-		concat_str(&buf_pos, "ms ");
+		concat_str(&buf_pos, "\033[0m ");
 		concat_int(&buf_pos, philo->id);
 		concat_str(&buf_pos, status);
 		*buf_pos = '\0';

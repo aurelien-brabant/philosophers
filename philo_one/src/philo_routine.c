@@ -3,8 +3,8 @@
 void	philo_routine_eat(t_philosopher *philo)
 {
 	pthread_mutex_lock(philo->first_fork);
-	pthread_mutex_lock(philo->second_fork);
 	output_status(" has taken a fork\n", philo);
+	pthread_mutex_lock(philo->second_fork);
 	output_status(" has taken a fork\n", philo);
 	philo->last_meal_timestamp = get_timestamp();
 	philo->eat_count++;
