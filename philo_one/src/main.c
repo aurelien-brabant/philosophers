@@ -50,9 +50,10 @@ static void	run_simulation(t_philosopher *philosophers, t_fork *forks)
 	while (i < nb_of_philo)
 	{
 		pthread_create(&philosophers[i].thread, NULL, (void *)(void *)&spawn_philosopher, &philosophers[i]);
-		i += 1;
+		i += 2;
 	}
 	i = 1;
+	usleep(1000);
 	while (i < nb_of_philo)
 	{
 		pthread_create(&philosophers[i].thread, NULL, (void *)(void *)&spawn_philosopher, &philosophers[i]);
@@ -92,11 +93,11 @@ int	main(int ac, char **av)
 	
 	if (!parse_params(ac, av))
 		return (1);
-	philosophers = get_philosophers();
-	if (philosophers == NULL)
-		return (1);
 	forks = forks_init();
 	if (forks == NULL)
+		return (1);
+	philosophers = philosophers_init(forks);
+	if (philosophers == NULL)
 		return (1);
 	init_mutexes();
 	run_simulation(philosophers, forks);

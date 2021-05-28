@@ -12,15 +12,20 @@ typedef enum e_philo_one_mutex
 
 }	t_philo_one_mutex;
 
-typedef struct s_fork
-{
-	unsigned long long	owner;
-	unsigned long long	id;
-	pthread_mutex_t		mutex;
-}	t_fork;
+/*
+** A fork is represented as a simple mutex
+*/
+
+typedef pthread_mutex_t	t_fork;
 
 /*
-** waiting_for_threads: set to true until all the threads have been created.
+** How a philosopher is represented internally for philo_one.
+**
+** first_fork points to the fork that the philosopher needs to lock first
+** before attempting to lock second_fork. The first_fork is NOT the fork
+** at the left of the philosopher, AND the second_fork is NOT the fork at
+** its right. What matters here is the order in which the two forks are
+** going to be locked, in order to avoid any deadlock.
 */
 
 typedef struct s_philosopher
@@ -28,16 +33,17 @@ typedef struct s_philosopher
 	pthread_t			thread;
 	bool					*health_check;
 	bool					*waiting_for_threads;
-	bool					*synced;
 	unsigned long long	id;
 	t_philo_state		state;
 	t_fork				*forks;
 	t_timestamp		last_meal_timestamp;
+	t_fork			*first_fork;
+	t_fork			*second_fork;
 	unsigned long long	eat_count;
 }	t_philosopher;
 
-t_philosopher		*philosophers_init(void);
-t_fork			*forks_init(void);
+t_philosopher		*philosophers_init(t_fork *forks);
+t_fork				*forks_init(void);
 void				*destroy_philosophers(t_philosopher *philo);
 void				*spawn_philosopher(t_philosopher *philo);
 void				philo_change_state(t_philosopher *philo, t_philo_state new_state);

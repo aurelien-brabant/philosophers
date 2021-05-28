@@ -1,4 +1,5 @@
 #include "philo_one.h"
+/*
 
 t_philosopher   *get_philosophers(void)
 {
@@ -8,3 +9,4 @@ t_philosopher   *get_philosophers(void)
         philosophers = philosophers_init();
     return (philosophers);
 }
+*/

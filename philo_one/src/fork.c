@@ -3,6 +3,7 @@
 
 #include "philo_one.h"
 
+/*
 bool	is_fork_available(t_fork *fork)
 {
 	bool	available;
@@ -33,3 +34,4 @@ void	drop_fork(t_fork *fork)
 	fork->owner = FORK_NOT_OWNED;
 	pthread_mutex_unlock(&fork->mutex);	
 }
+*/
