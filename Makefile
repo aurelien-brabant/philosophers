@@ -1,12 +1,12 @@
 all:
-	make -C philo_one
+	make --no-print-directory -C philo_one
 
 clean:
-	make clean -C philo_one
-	make clean -C lib
+	@make clean --no-print-directory -C philo_one
+	@make clean --no-print-directory -C lib
 
 fclean:
-	make fclean -C philo_one
-	make fclean -C lib
+	@make fclean --no-print-directory -C philo_one
+	@make fclean --no-print-directory -C lib
 
 re: fclean all

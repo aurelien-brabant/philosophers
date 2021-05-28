@@ -10,4 +10,5 @@ TARGET	:= libphilo.a
 all: $(TARGET)
 
 $(TARGET): $(OBJS)
-	ar rcs $(TARGET) $(OBJS)
+	@ar rcs $(TARGET) $(OBJS)
+	@printf "AR\t$(TARGET)\n"

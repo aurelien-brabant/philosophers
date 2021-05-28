@@ -8,12 +8,13 @@ RM			:= rm -rf
 .DEFAULT_GOAL	:= all 
 
 clean:
-	$(RM) $(OBJS)
+	@$(RM) $(OBJS)
 
 fclean: clean
-	$(RM) $(TARGET)
+	@$(RM) $(TARGET)
 
 re: fclean all
 
 %.o:%.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@printf "CC\t$<\n"
