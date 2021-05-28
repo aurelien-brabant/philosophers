@@ -1,11 +1,18 @@
 #include "philo_one.h"
 
+static void	take_fork(t_philosopher *philo)
+{
+	pthread_mutex_lock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
+	output_status(" has taken a fork\n", philo);
+	pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
+}
+
 void	philo_routine_eat(t_philosopher *philo)
 {
 	pthread_mutex_lock(philo->first_fork);
-	output_status(" has taken a fork\n", philo);
+	take_fork(philo);
 	pthread_mutex_lock(philo->second_fork);
-	output_status(" has taken a fork\n", philo);
+	take_fork(philo);
 	philo->last_meal_timestamp = get_timestamp();
 	philo->eat_count++;
 	philo_change_state(philo, PHILO_STATE_EATING);

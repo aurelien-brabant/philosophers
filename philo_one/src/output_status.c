@@ -49,7 +49,6 @@ void	output_status(const char *status, t_philosopher *philo)
 	if (philo == NULL)
 		return ;
 	buf_pos = buf;
-	pthread_mutex_lock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
 	if (*philo->health_check)
 	{
 		concat_str(&buf_pos, "\033[1;40m");
@@ -60,5 +59,4 @@ void	output_status(const char *status, t_philosopher *philo)
 		*buf_pos = '\0';
 		write(STDOUT_FILENO, buf, ft_strlen(buf));
 	}
-	pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
 }
