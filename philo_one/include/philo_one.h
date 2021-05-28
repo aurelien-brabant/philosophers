@@ -3,6 +3,7 @@
 # include <pthread.h>
 # include "lib.h"
 # define FORK_NOT_OWNED 0
+# define STATUS_BUFFER_SIZE 1000000
 
 typedef enum e_philo_one_mutex
 {
@@ -33,7 +34,7 @@ typedef struct s_philosopher
 }	t_philosopher;
 
 t_philosopher		*philosophers_init(void);
-void				*destroy_philosophers(t_philosopher *philo);
+void				destroy_philo_one(t_philosopher *philosophers);
 
 void				philo_change_state(t_philosopher *philo, t_philo_state new_state);
 void				output_status(const char *status, t_philosopher *philo);

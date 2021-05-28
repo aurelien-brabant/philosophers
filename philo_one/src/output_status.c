@@ -15,7 +15,7 @@ static size_t	int_char_size(unsigned long long n)
 	return (i);
 }
 
-void	concat_int(char **buf, unsigned long long n)
+static void	concat_int(char **buf, unsigned long long n)
 {
 	size_t	i;
 	size_t	char_size;
@@ -32,7 +32,7 @@ void	concat_int(char **buf, unsigned long long n)
 	*buf += char_size;
 }
 
-void	concat_str(char **buf, const char *s)
+static void	concat_str(char **buf, const char *s)
 {
 	while (*s != '\0')
 	{
@@ -43,7 +43,7 @@ void	concat_str(char **buf, const char *s)
 
 void	output_status(const char *status, t_philosopher *philo)
 {
-	static char		buf[100000];
+	static char		buf[STATUS_BUFFER_SIZE];
 	char				*buf_pos;
 	
 	if (philo == NULL)

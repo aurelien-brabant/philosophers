@@ -20,18 +20,20 @@ static void	run_simulation(t_philosopher *philosophers)
 	output_status(NULL, NULL);
 	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
 	health_check = malloc(sizeof (*health_check));
+	if (health_check == NULL)
+		return ;
 	*health_check = true;
 	i = 0;
 	while (i < nb_of_philo)
 		philosophers[i++].health_check = health_check;
-	thread_philo_start_parity(philosophers, false);
+	if (thread_philo_start_parity(philosophers, false) != 0)
+		return ;
 	usleep(1000);
-	thread_philo_start_parity(philosophers, true);
+	if (thread_philo_start_parity(philosophers, true) != 0)
+		return ;
 	pthread_create(&philo_watcher_thread, NULL, (void *)(void *)&philo_watcher, philosophers);
 	pthread_join(philo_watcher_thread, NULL);
-	thread_terminate_simulation(philosophers);
 }
-
 
 int	main(int ac, char **av)
 {
@@ -44,8 +46,7 @@ int	main(int ac, char **av)
 		return (1);
 	init_mutexes();
 	run_simulation(philosophers);
-	free(philosophers[0].forks);
-	free(philosophers);
-	destroy_mutexes();
+	thread_terminate_simulation(philosophers);
+	destroy_philo_one(philosophers);
 	return (0);
 }

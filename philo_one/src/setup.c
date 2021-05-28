@@ -37,6 +37,19 @@ static t_fork	*forks_init(void)
 	return (forks);
 }
 
+/*
+** Free all the allocated memory for philo_one.
+** Can be used if an error occured to free what can be free,
+** or at the end of the simulation if everything went well.
+*/
+
+void	destroy_philo_one(t_philosopher *philosophers)
+{
+	free(philosophers[0].forks);
+	free(philosophers[0].health_check);
+	free(philosophers);
+}
+
 t_philosopher	*philosophers_init(void)
 {
 	t_philosopher	*philosophers;

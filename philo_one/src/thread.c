@@ -1,8 +1,6 @@
 #include "philo_one.h"
 
 /*
-** @param	philosophers	the array of philosophers.
-**
 ** Attempt to join all the threads, each one being a philosopher
 ** thread_terminate_simulation needs to be called after the philo_watcher
 ** thread has terminated, which means that a philosopher is dead OR that
