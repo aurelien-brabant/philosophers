@@ -8,8 +8,9 @@
 ** or at the end of the simulation if everything went well.
 */
 
-void	destroy_philo_one(t_philosopher *philosophers)
+void	destroy_philo_two(t_philosopher *philosophers)
 {
+	semaphores_destroy();
 	free(philosophers[0].health_check);
 	free(philosophers);
 }

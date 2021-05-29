@@ -1,9 +1,17 @@
 #ifndef PHILO_TWO_H
 # define PHILO_TWO_H
 # include <pthread.h>
+# include <semaphore.h>
 # include "lib.h"
 # define FORK_NOT_OWNED 0
 # define STATUS_BUFFER_SIZE 1000000
+
+typedef enum e_philo_two_semaphore
+{
+	PHILO_TWO_STATE_SEMAPHORE = 0,
+	PHILO_TWO_FORK_SEMAPHORE = 1,
+	PHILO_TWO_SEMAPHORE_MAX	
+}	t_philo_two_semaphore;
 
 typedef struct s_philosopher
 {
@@ -16,7 +24,7 @@ typedef struct s_philosopher
 }	t_philosopher;
 
 t_philosopher		*philosophers_init(void);
-void				destroy_philo_one(t_philosopher *philosophers);
+void				destroy_philo_two(t_philosopher *philosophers);
 
 void				philo_change_state(t_philosopher *philo, t_philo_state new_state);
 void				output_status(const char *status, t_philosopher *philo);
@@ -40,11 +48,11 @@ void				*spawn_philosopher(t_philosopher *philo);
 void				*philo_watcher(t_philosopher *philo);
 
 /*
-** MUTEX
+** SEMAPHORE 
 */
 
-void				init_mutexes(void);
-void				destroy_mutexes(void);
-pthread_mutex_t	*get_mutexes(void);
+bool			semaphores_init(void);
+void			semaphores_destroy(void);
+sem_t			**get_semaphores(void);
 
 #endif
