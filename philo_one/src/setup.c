@@ -37,6 +37,17 @@ static t_fork	*forks_init(void)
 	return (forks);
 }
 
+static void	destroy_forks(t_fork *forks)
+{
+	unsigned long long	i;
+	unsigned long long	nb_of_philo;
+
+	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
+	i = 0;
+	while (i < nb_of_philo)
+		pthread_mutex_destroy(&forks[i++]);
+}
+
 /*
 ** Free all the allocated memory for philo_one.
 ** Can be used if an error occured to free what can be free,
@@ -45,6 +56,8 @@ static t_fork	*forks_init(void)
 
 void	destroy_philo_one(t_philosopher *philosophers)
 {
+	destroy_mutexes();
+	destroy_forks(philosophers[0].forks);
 	free(philosophers[0].forks);
 	free(philosophers[0].health_check);
 	free(philosophers);
