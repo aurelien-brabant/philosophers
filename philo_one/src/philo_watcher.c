@@ -7,7 +7,8 @@
 ** is_philosopher_healthy
 **
 ** Ensure that the philosopher is not starving. If he is, then the simulation
-** needs to stop as soon as possible
+** needs to stop as soon as possible. The philo_change_state function will set
+** the health_check boolean to false directly, as the new_state is death.
 **
 ** @param	philo	the address of the philosopher which is checked.
 **
@@ -23,21 +24,6 @@ static bool	is_philosopher_healthy(t_philosopher *philo)
 	}
 	return (true);
 }
-
-/*
-static void	check_sync(t_philosopher *philosophers)
-{
-	unsigned long long	i;
-
-	i = 0;
-	while (i < get_params()[NUMBER_OF_PHILOSOPHERS])
-	{
-		if (i == 0)
-		i += 2;	
-	}
-	*philosophers[0].synced = true;
-}
-*/
 
 /*
 ** philo_watcher
@@ -60,19 +46,18 @@ void	*philo_watcher(t_philosopher *philosophers)
 	unsigned long long	i;
 	unsigned long long	nb_of_full_philo;
 	unsigned long long	nb_of_philo;
+	unsigned long long	max_eat;
 
 	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
+	max_eat = get_params()[NUMBER_OF_TIMES_EACH_PHILOSOPHER_MUST_EAT];
 	nb_of_full_philo = 0;
 	i = 0;
 	while (1)
 	{
 		if (!is_philosopher_healthy(&philosophers[i]))
+			return (philosophers);
+		if (philosophers[i].eat_count >= max_eat && ++nb_of_full_philo == nb_of_philo)
 			break ;
-		if (philosophers[i].eat_count >= get_params()[NUMBER_OF_TIMES_EACH_PHILOSOPHER_MUST_EAT])
-		{
-			if (++nb_of_full_philo == nb_of_philo)
-				break ;
-		}
 		if (++i == nb_of_philo)
 		{
 			nb_of_full_philo = 0;

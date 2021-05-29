@@ -7,20 +7,31 @@
 /*
 ** Spawn a philosopher, making him live until he spends time_to_die ms without
 ** eating.
-** Each philosopher, which is a thread, needs to wait for all the others to be ready.
-** That's the purpose of the first while loop.
-** philo->waiting_for_threads is automatically going to be set to false when all the
-** threads will have been created. This is managed by the main thread.
+**
+** If there's only one philosopher and therefore only one fork available, then
+** the philosopher is not going to take any fork and will just die at
+** time_to_die ms.
 */
 
 void	*spawn_philosopher(t_philosopher *philo)
 {
-	while (*philo->health_check)
+	unsigned long long	philo_nb;
+
+	philo_nb = get_params()[NUMBER_OF_PHILOSOPHERS];
+	if (philo_nb == 1)
 	{
-		philo_routine_eat(philo);
-		philo_routine_sleep(philo);
-		philo_routine_think(philo);
-		usleep(100);
+		while (*philo->health_check)
+			usleep(100);
+	}
+	else
+	{
+		while (*philo->health_check)
+		{
+			philo_routine_eat(philo);
+			philo_routine_sleep(philo);
+			philo_routine_think(philo);
+			usleep(100);
+		}
 	}
 	return (philo);
 }
