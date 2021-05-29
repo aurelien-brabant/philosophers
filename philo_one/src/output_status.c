@@ -41,6 +41,22 @@ static void	concat_str(char **buf, const char *s)
 	}
 }
 
+/*
+** Output the status of a philosopher, as asked by the subject.
+** The output is presented in the following fashion:
+** <TIMESTAMP> <PHILOSOPHER_ID> <ACTION>
+** A single call to write is issued instead of a complicated printf one,
+** in order to avoid performance issues.
+**
+** A big static buffer is allocated in order to hold the entire string which
+** is going to be outputed. Functions such as concat_str and concat_int are
+** here to build this string. The fact the buffer is static means that it is
+** going to be allocated at the first call only, and not at every call, which
+** highly reduces the produced overhead. output_status(NULL, NULL) is issued
+** in the initialization phase to allocate the buffer before the actual simulation
+** begins.
+*/
+
 void	output_status(const char *status, t_philosopher *philo)
 {
 	static char		buf[STATUS_BUFFER_SIZE];
@@ -57,6 +73,6 @@ void	output_status(const char *status, t_philosopher *philo)
 		concat_int(&buf_pos, philo->id);
 		concat_str(&buf_pos, status);
 		*buf_pos = '\0';
-		write(STDOUT_FILENO, buf, ft_strlen(buf));
+		write(STDOUT_FILENO, buf, buf_pos - buf);
 	}
 }
