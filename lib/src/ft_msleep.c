@@ -4,7 +4,7 @@
 
 #include "lib.h"
 
-void	ft_usleep(unsigned long long duration_in_ms)
+void	ft_msleep(unsigned long long duration_in_ms)
 {
 	t_timestamp	start_ts;
 	t_timestamp	current_ts;

@@ -27,13 +27,14 @@ typedef enum e_philo_state
 typedef unsigned long long int t_timestamp;
 
 size_t			ft_strlen(const char *s);
-bool			parse_uint(const char *s, unsigned long long *n);
+bool			parseexit_code_uint(const char *s, unsigned long long *n);
 int				dputs(const char *s, int fd);
-int				error_out(const char *msg, int exit_code);
+int				error_out(const char *msg, int error_code);
 bool				parse_params(int ac, char **av);
 t_timestamp 		get_timestamp(void);
 unsigned long long	*get_params(void);
-void			ft_usleep(unsigned long long ms);
+void			ft_msleep(unsigned long long ms);
 const char	*get_state_string(t_philo_state state);
+bool			parse_uint(const char *sint, unsigned long long *n);
 
 #endif

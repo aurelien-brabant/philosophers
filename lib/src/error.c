@@ -2,8 +2,8 @@
 
 #include "lib.h"
 
-int	error_out(const char *msg, int exit_code)
+int	error_out(const char *msg, int error_code)
 {
 	dputs(msg, STDERR_FILENO);
-	return (exit_code);
+	return (error_code);
 }

@@ -1,7 +1,7 @@
 include ../Makefile.template
 
 SRCS		:= $(addprefix src/, ft_strlen.c dputs.c parse_uint.c error.c parse_params.c	\
-				get_timestamp.c get_params.c ft_usleep.c get_state_string.c)
+				get_timestamp.c get_params.c ft_msleep.c get_state_string.c)
 
 OBJS	:= $(SRCS:%.c=%.o)
 
