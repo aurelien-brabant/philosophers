@@ -42,7 +42,8 @@ void				philo_routine_eat(t_philosopher *philo);
 */
 
 void				thread_terminate_simulation(t_philosopher *philosophers);
-int				thread_philo_start(t_philosopher *philosophers);
+int				thread_philo_start_range(t_philosopher *philosophers,
+						unsigned long long low, unsigned long long high);
 
 void				*spawn_philosopher(t_philosopher *philo);
 void				*philo_watcher(t_philosopher *philo);

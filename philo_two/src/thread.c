@@ -1,3 +1,5 @@
+#include <unistd.h>
+
 #include "philo_two.h"
 
 /*
@@ -23,25 +25,17 @@ void	thread_terminate_simulation(t_philosopher *philosophers)
 		pthread_join(philosophers[i++].thread, NULL);
 }
 
-/*
-** Start all the philosophers at the same time.
-*/
-
-int	thread_philo_start(t_philosopher *philosophers)
+int	thread_philo_start_range(t_philosopher *philosophers, unsigned long long low, unsigned long long high)
 {
-	unsigned long long i;
-	unsigned long long	nb_of_philo;
 	int					pthread_create_ret;
 
-	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
-	i = 0;
-	while (i < nb_of_philo)
+	while (low < high)
 	{
-		pthread_create_ret = pthread_create(&philosophers[i].thread, NULL,
-			(void *)(void *)&spawn_philosopher, &philosophers[i]);
+		pthread_create_ret = pthread_create(&philosophers[low].thread, NULL,
+			(void *)(void *)&spawn_philosopher, &philosophers[low]);
 		if (pthread_create_ret != 0)
 			return (pthread_create_ret);
-		++i;
+		++low;
 	}
 	return (0);
 }

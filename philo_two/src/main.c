@@ -26,7 +26,9 @@ static void	run_simulation(t_philosopher *philosophers)
 	i = 0;
 	while (i < nb_of_philo)
 		philosophers[i++].health_check = health_check;
-	return ;
+	thread_philo_start_range(philosophers, 0, nb_of_philo / 2);
+	usleep(100);
+	thread_philo_start_range(philosophers, nb_of_philo / 2, nb_of_philo);
 	pthread_create(&philo_watcher_thread, NULL, (void *)(void *)&philo_watcher, philosophers);
 	pthread_join(philo_watcher_thread, NULL);
 }
@@ -43,7 +45,7 @@ int	main(int ac, char **av)
 	if (philosophers == NULL)
 		return (1);
 	run_simulation(philosophers);
-	//thread_terminate_simulation(philosophers);
+	thread_terminate_simulation(philosophers);
 	destroy_philo_two(philosophers);
 	return (0);
 }
