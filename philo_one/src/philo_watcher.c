@@ -19,7 +19,9 @@ static bool	is_philosopher_healthy(t_philosopher *philo)
 {
 	if (get_timestamp() >= philo->last_meal_timestamp + get_params()[TIME_TO_DIE])
 	{
+		pthread_mutex_lock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
 		philo_change_state(philo, PHILO_STATE_DEAD);
+		pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
 		return (false);
 	}
 	return (true);
