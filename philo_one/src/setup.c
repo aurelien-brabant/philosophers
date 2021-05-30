@@ -9,7 +9,7 @@ static void	give_forks(t_philosopher *philo, t_fork *forks)
 
 	left_fork = &forks[philo->id - 1];
 	right_fork = &forks[philo->id % get_params()[NUMBER_OF_PHILOSOPHERS]];
-	if (philo->id % 2 == 0)
+	if (philo->id % 2 == 0 || philo->id == get_params()[NUMBER_OF_PHILOSOPHERS])
 	{
 		philo->first_fork = right_fork;
 		philo->second_fork = left_fork;
