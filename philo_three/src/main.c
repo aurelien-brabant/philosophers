@@ -23,7 +23,6 @@ void	run_simulation(t_philosopher *philosophers)
 	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
 	while (i < nb_of_philo)
 	{
-		philosophers[i].semaphores = get_semaphores();
 		pid = fork();
 		if (pid == 0)
 		{
@@ -62,7 +61,7 @@ int	main(int ac, char **av)
 	
 	if (!parse_params(ac, av))
 		return (1);
-	if (!semaphores_init())
+	if (!semaphores_init(get_params()[NUMBER_OF_PHILOSOPHERS]))
 		return (1);
 	philosophers = philosophers_init();
 	if (philosophers == NULL)

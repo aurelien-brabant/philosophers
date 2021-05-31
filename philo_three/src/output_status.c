@@ -57,11 +57,14 @@ static void	concat_str(char **buf, const char *s)
 ** begins.
 */
 
+#include <stdio.h>
+
 void	output_status(const char *status, t_philosopher *philo)
 {
 	static char		buf[STATUS_BUFFER_SIZE];
 	char				*buf_pos;
 	
+	printf("Hello from output status");
 	if (philo == NULL)
 		return ;
 	buf_pos = buf;

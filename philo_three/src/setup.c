@@ -15,11 +15,13 @@ void	destroy_philo_two(t_philosopher *philosophers)
 
 t_philosopher	*philosophers_init(void)
 {
-	t_philosopher	*philosophers;
+	t_philosopher		*philosophers;
+	unsigned long long	*params;
 	unsigned long long	nb_of_philo;
 	unsigned long long	i;
 
-	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
+	params = get_params();
+	nb_of_philo = params[NUMBER_OF_PHILOSOPHERS];
 	philosophers = malloc(sizeof (*philosophers) * nb_of_philo);
 	if (philosophers == NULL)
 		return (NULL);
@@ -30,6 +32,7 @@ t_philosopher	*philosophers_init(void)
 		philosophers[i].last_meal_timestamp = 0;
 		philosophers[i].state = PHILO_STATE_THINKING; 
 		philosophers[i].eat_count = 0;
+		philosophers[i].params = params;
 		++i;
 	}
 	return (philosophers);

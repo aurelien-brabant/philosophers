@@ -6,6 +6,9 @@
 # define FORK_NOT_OWNED 0
 # define STATUS_BUFFER_SIZE 1000000
 
+# define SEM_NM_FORK "/fork"
+# define SEM_NM_STATE "/state"
+
 typedef enum e_philo_two_semaphore
 {
 	PHILO_TWO_STATE_SEMAPHORE = 0,
@@ -21,7 +24,7 @@ typedef struct s_philosopher
 	t_philo_state		state;
 	t_timestamp		last_meal_timestamp;
 	unsigned long long	eat_count;
-	sem_t				**semaphores;
+	unsigned long long	*params;
 }	t_philosopher;
 
 t_philosopher		*philosophers_init(void);
@@ -34,9 +37,9 @@ void				output_status(const char *status, t_philosopher *philo);
 ** ROUTINES
 */
 
-void				philo_routine_think(t_philosopher *philo);
-void				philo_routine_sleep(t_philosopher *philo);
-void				philo_routine_eat(t_philosopher *philo);
+void				philo_routine_think(t_philosopher *philo, sem_t *state_sem);
+void				philo_routine_sleep(t_philosopher *philo, sem_t *state_sem);
+void				philo_routine_eat(t_philosopher *philo, sem_t *state_sem, sem_t *fork_sem);
 
 /*
 ** THREAD
@@ -53,7 +56,7 @@ void				*philo_watcher(t_philosopher *philo);
 ** SEMAPHORE 
 */
 
-bool			semaphores_init(void);
+bool			semaphores_init(unsigned long long nb_of_philo);
 void			semaphores_destroy(void);
 sem_t			**get_semaphores(void);
 
