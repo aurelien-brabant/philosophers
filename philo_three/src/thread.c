@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 /*
 ** Attempt to join all the threads, each one being a philosopher

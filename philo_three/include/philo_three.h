@@ -1,5 +1,5 @@
-#ifndef PHILO_TWO_H
-# define PHILO_TWO_H
+#ifndef PHILO_THREE_H
+# define PHILO_THREE_H
 # include <pthread.h>
 # include <semaphore.h>
 # include "lib.h"
@@ -15,12 +15,13 @@ typedef enum e_philo_two_semaphore
 
 typedef struct s_philosopher
 {
-	pthread_t			thread;
+	int					pid;
 	bool					*health_check;
 	unsigned long long	id;
 	t_philo_state		state;
 	t_timestamp		last_meal_timestamp;
 	unsigned long long	eat_count;
+	sem_t				**semaphores;
 }	t_philosopher;
 
 t_philosopher		*philosophers_init(void);
@@ -45,7 +46,7 @@ void				thread_terminate_simulation(t_philosopher *philosophers);
 int				thread_philo_start_range(t_philosopher *philosophers,
 						unsigned long long low, unsigned long long high);
 
-void				*spawn_philosopher(t_philosopher *philo);
+void				spawn_philosopher(t_philosopher *philo);
 void				*philo_watcher(t_philosopher *philo);
 
 /*

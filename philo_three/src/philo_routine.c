@@ -1,15 +1,17 @@
-#include "philo_two.h"
+#include "philo_three.h"
+#include <stdio.h>
 
 void	philo_routine_eat(t_philosopher *philo)
 {
 	sem_t	*fork_sem;
 	sem_t	*state_sem;
 
-	fork_sem = get_semaphores()[PHILO_TWO_FORK_SEMAPHORE];
-	state_sem = get_semaphores()[PHILO_TWO_STATE_SEMAPHORE];
+	fork_sem = philo->semaphores[PHILO_TWO_FORK_SEMAPHORE];
+	state_sem = philo->semaphores[PHILO_TWO_STATE_SEMAPHORE];
 	sem_wait(fork_sem);
 	sem_wait(fork_sem);
 	sem_wait(state_sem);
+	printf("Hello from eat routine, I am philo %lld\n", philo->id);
 	output_status(" has taken a fork\n", philo);
 	output_status(" has taken a fork\n", philo);
 	philo_change_state(philo, PHILO_STATE_EATING);

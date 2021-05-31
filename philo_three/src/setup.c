@@ -1,6 +1,6 @@
 #include <stdlib.h>
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 /*
 ** Free all the allocated memory for philo_one.
@@ -10,8 +10,6 @@
 
 void	destroy_philo_two(t_philosopher *philosophers)
 {
-	semaphores_destroy();
-	free(philosophers[0].health_check);
 	free(philosophers);
 }
 

@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 static size_t	int_char_size(unsigned long long n)
 {

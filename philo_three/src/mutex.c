@@ -1,4 +1,4 @@
-#include "philo_two.h"
+#include "philo_three.h"
 
 /*
 ** Destroy global mutexes, freeing all the memory allocated for it.

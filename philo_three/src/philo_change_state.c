@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <pthread.h>
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 /*
 ** Change the current state of a philosopher, outputing the change on STDOUT.

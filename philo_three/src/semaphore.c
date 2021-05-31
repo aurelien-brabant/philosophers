@@ -2,7 +2,7 @@
 #include <fcntl.h>
 #include <string.h>
 #include <stdio.h>
-#include "philo_two.h"
+#include "philo_three.h"
 #include "errno.h"
 
 sem_t	**get_semaphores(void)

@@ -1,7 +1,8 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "philo_two.h"
+#include "philo_three.h"
 #include "lib.h"
 
 /*
@@ -13,25 +14,18 @@
 ** time_to_die ms.
 */
 
-void	*spawn_philosopher(t_philosopher *philo)
+void	spawn_philosopher(t_philosopher *philo)
 {
 	unsigned long long	philo_nb;
 
+	printf("Spawned philo %lld\n", philo->id);
 	philo_nb = get_params()[NUMBER_OF_PHILOSOPHERS];
-	if (philo_nb == 1)
+	while (1)
 	{
-		while (*philo->health_check)
-			usleep(100);
+		philo_routine_eat(philo);
+		philo_routine_sleep(philo);
+		philo_routine_think(philo);
+		usleep(100);
 	}
-	else
-	{
-		while (*philo->health_check)
-		{
-			philo_routine_eat(philo);
-			philo_routine_sleep(philo);
-			philo_routine_think(philo);
-			usleep(100);
-		}
-	}
-	return (philo);
+	exit(0);
 }

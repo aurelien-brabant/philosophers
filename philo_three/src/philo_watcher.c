@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "philo_two.h"
+#include "philo_three.h"
 
 /*
 ** is_philosopher_healthy
