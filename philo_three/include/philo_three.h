@@ -22,12 +22,14 @@ typedef enum e_philo_two_semaphore
 
 typedef struct s_philosopher
 {
-	int					pid;
-	bool					*health_check;
-	unsigned long long	id;
-	t_philo_state		state;
-	t_timestamp		last_meal_timestamp;
-	unsigned long long	eat_count;
+	int						pid;
+	bool						*health_check;
+	unsigned long long		id;
+	t_philo_state			state;
+	t_timestamp			last_meal_timestamp;
+	unsigned long long		eat_count;
+	bool					is_at_table;
+	struct s_philosopher	*philosophers;
 }	t_philosopher;
 
 t_philosopher		*philosophers_init(void);
@@ -40,9 +42,9 @@ void				output_status(const char *status, t_philosopher *philo);
 ** ROUTINES
 */
 
-void				philo_routine_think(t_philosopher *philo);
-void				philo_routine_sleep(t_philosopher *philo);
-void				philo_routine_eat(t_philosopher *philo);
+bool				philo_routine_think(t_philosopher *philo);
+bool				philo_routine_sleep(t_philosopher *philo);
+bool				philo_routine_eat(t_philosopher *philo);
 
 /*
 ** THREAD

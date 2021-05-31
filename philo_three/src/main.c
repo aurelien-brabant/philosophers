@@ -15,7 +15,7 @@ static void	kill_processes(t_philosopher *philosophers)
 	i = 0;
 	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
 	while (i < nb_of_philo)
-		kill(philosophers[i++].pid, SIGSTOP);
+		kill(philosophers[i++].pid, SIGKILL);
 }
 
 /*
@@ -38,7 +38,10 @@ void	run_simulation(t_philosopher *philosophers)
 	{
 		pid = fork();
 		if (pid == 0)
+		{
+			philosophers[i].philosophers = philosophers;
 			spawn_philosopher(&philosophers[i]);
+		}
 		else 
 			philosophers[i].pid = pid;
 		++i;

@@ -5,6 +5,14 @@
 #include "philo_three.h"
 #include "lib.h"
 
+static void	exit_child_process(t_philosopher *philo, int exit_code)
+{
+	sem_close(get_semaphores()[PHILO_THREE_SEM_FORK]);
+	sem_close(get_semaphores()[PHILO_THREE_SEM_STATE]);
+	free(philo->philosophers);
+	exit(exit_code);
+}
+
 static void	*spawn_watcher(t_philosopher *philo)
 {
 	sem_t	*state_sem;
@@ -12,13 +20,14 @@ static void	*spawn_watcher(t_philosopher *philo)
 
 	state_sem = get_semaphores()[PHILO_THREE_SEM_STATE];
 	time_to_die = get_params()[TIME_TO_DIE];
-	while (1)
+	while (philo->is_at_table)
 	{
 		if (get_timestamp() >= philo->last_meal_timestamp + time_to_die)
 		{
+			philo->is_at_table = false;
 			sem_wait(state_sem);
 			philo_change_state(philo, PHILO_STATE_DEAD);
-			exit(EXIT_CHILD_DIED);
+			exit_child_process(philo, EXIT_CHILD_DIED);
 		}
 		usleep(1000);
 	}
@@ -39,17 +48,22 @@ void	spawn_philosopher(t_philosopher *philo)
 	pthread_t			watcher;
 	unsigned long long	max_eat;
 
+	philo->is_at_table = true;
 	max_eat = get_params()[NUMBER_OF_TIMES_EACH_PHILOSOPHER_MUST_EAT];
 	pthread_create(&watcher, NULL, (void *)(void *)&spawn_watcher, philo);
 	pthread_detach(watcher);
 	while (1)
 	{
-		philo_routine_eat(philo);
-		if (philo->eat_count >= max_eat)
+		if (!philo_routine_eat(philo))
 			break ;
-		philo_routine_sleep(philo);
-		philo_routine_think(philo);
+		if (philo->eat_count >= max_eat)
+		{
+			philo->is_at_table = false;
+			break ;
+		}
+		if (!philo_routine_sleep(philo) || !philo_routine_think(philo))
+			break ;
 		usleep(100);
 	}
-	exit(EXIT_CHILD_HAS_EATEN);
+	exit_child_process(philo, EXIT_CHILD_HAS_EATEN);
 }
