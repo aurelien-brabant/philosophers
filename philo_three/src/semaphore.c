@@ -8,33 +8,31 @@
 
 sem_t	**get_semaphores(void)
 {
-	static sem_t	*semaphores[PHILO_TWO_SEMAPHORE_MAX];
+	static sem_t	*semaphores[PHILO_THREE_SEM_MAX];
 
 	return (semaphores);
 }
 
 /*
-** Create the semaphores, unlinking them if they were already existing.
+** Initialize semaphores, that will be widely available using get_semaphores.
 */
 
-bool	semaphores_init(unsigned long long nb_of_philo)
+bool	semaphores_init(void)
 {
-	sem_t	*sem_fork;
-	sem_t	*sem_state;
-	bool	is_successful;
+	sem_t	**sems;
 
+	sems = get_semaphores();
 	sem_unlink(SEM_NM_FORK);
 	sem_unlink(SEM_NM_STATE);
-	sem_fork = sem_open(SEM_NM_FORK, O_CREAT, 0644, nb_of_philo);
-	sem_state = sem_open(SEM_NM_STATE, O_CREAT, 0644, 1);
-	is_successful = sem_fork && sem_state;
-	if (!is_successful)
-		dputs("Could not create semaphores properly!\n", STDERR_FILENO);
-	if (sem_fork != SEM_FAILED)
-		sem_close(sem_fork);
-	if (sem_state != SEM_FAILED)
-		sem_close(sem_state);
-	return (is_successful);
+	sems[PHILO_THREE_SEM_FORK] = sem_open(SEM_NM_FORK, O_CREAT, 0644, get_params()[NUMBER_OF_PHILOSOPHERS]);
+	sems[PHILO_THREE_SEM_STATE] = sem_open(SEM_NM_STATE, O_CREAT, 0644, 1);
+	if (sems[PHILO_THREE_SEM_FORK] == SEM_FAILED 
+		|| sems[PHILO_THREE_SEM_STATE] == SEM_FAILED)
+	{
+		dputs("Error: could not initialize semaphores!\n", STDERR_FILENO);
+		return (false);
+	}
+	return (true);
 }
 
 void	semaphores_destroy(void)
@@ -42,8 +40,8 @@ void	semaphores_destroy(void)
 	sem_t	**semaphores;
 
 	semaphores = get_semaphores();
-	sem_close(semaphores[PHILO_TWO_STATE_SEMAPHORE]);
-	sem_close(semaphores[PHILO_TWO_FORK_SEMAPHORE]);
-	sem_unlink("/fork");
-	sem_unlink("/state");
+	sem_close(semaphores[PHILO_THREE_SEM_FORK]);
+	sem_close(semaphores[PHILO_THREE_SEM_STATE]);
+	sem_unlink(SEM_NM_FORK);
+	sem_unlink(SEM_NM_STATE);
 }

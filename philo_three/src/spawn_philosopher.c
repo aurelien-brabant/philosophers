@@ -5,22 +5,24 @@
 #include "philo_three.h"
 #include "lib.h"
 
-static bool	open_semaphores(sem_t **state_sem_loc, sem_t **fork_sem_loc)
+static void	*spawn_watcher(t_philosopher *philo)
 {
-	*fork_sem_loc = sem_open(SEM_NM_FORK, 0);
-	if (*fork_sem_loc == SEM_FAILED)
+	sem_t	*state_sem;
+	unsigned long long	time_to_die;
+
+	state_sem = get_semaphores()[PHILO_THREE_SEM_STATE];
+	time_to_die = get_params()[TIME_TO_DIE];
+	while (1)
 	{
-		dputs("fork sem could not be opened by child process\n", STDERR_FILENO);
-		return (false);
+		if (get_timestamp() >= philo->last_meal_timestamp + time_to_die)
+		{
+			sem_wait(state_sem);
+			philo_change_state(philo, PHILO_STATE_DEAD);
+			exit(EXIT_CHILD_DIED);
+		}
+		usleep(1000);
 	}
-	*state_sem_loc = sem_open(SEM_NM_STATE, 0);
-	if (*state_sem_loc == SEM_FAILED)
-	{
-		dputs("state sem could not be opened by child process\n", STDERR_FILENO);
-		sem_close(*fork_sem_loc);
-		return (false);
-	}
-	return (true);
+	return (NULL);
 }
 
 /*
@@ -34,20 +36,20 @@ static bool	open_semaphores(sem_t **state_sem_loc, sem_t **fork_sem_loc)
 
 void	spawn_philosopher(t_philosopher *philo)
 {
-	unsigned long long	philo_nb;
-	sem_t				*fork_sem;
-	sem_t				*state_sem;
+	pthread_t			watcher;
+	unsigned long long	max_eat;
 
-	if (!open_semaphores(&state_sem, &fork_sem))
-		exit(1);
-	philo_nb = get_params()[NUMBER_OF_PHILOSOPHERS];
+	max_eat = get_params()[NUMBER_OF_TIMES_EACH_PHILOSOPHER_MUST_EAT];
+	pthread_create(&watcher, NULL, (void *)(void *)&spawn_watcher, philo);
+	pthread_detach(watcher);
 	while (1)
 	{
-		philo_routine_eat(philo, state_sem, fork_sem);
-		philo_routine_sleep(philo, state_sem);
-		philo_routine_think(philo, state_sem);
+		philo_routine_eat(philo);
+		if (philo->eat_count >= max_eat)
+			break ;
+		philo_routine_sleep(philo);
+		philo_routine_think(philo);
 		usleep(100);
-		printf("Spawned philo %lld\n", philo->id);
 	}
-	exit(0);
+	exit(EXIT_CHILD_HAS_EATEN);
 }

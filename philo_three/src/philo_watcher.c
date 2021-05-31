@@ -19,7 +19,7 @@ static bool	is_philosopher_healthy(t_philosopher *philo)
 {
 	sem_t	*state_sem;
 
-	state_sem = get_semaphores()[PHILO_TWO_STATE_SEMAPHORE];
+	state_sem = get_semaphores()[PHILO_THREE_SEM_STATE];
 	if (get_timestamp() >= philo->last_meal_timestamp + get_params()[TIME_TO_DIE])
 	{
 		sem_wait(state_sem);

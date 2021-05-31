@@ -64,18 +64,14 @@ void	output_status(const char *status, t_philosopher *philo)
 	static char		buf[STATUS_BUFFER_SIZE];
 	char				*buf_pos;
 	
-	printf("Hello from output status");
 	if (philo == NULL)
 		return ;
 	buf_pos = buf;
-	if (*philo->health_check)
-	{
-		concat_str(&buf_pos, "\033[1;40m");
-		concat_int(&buf_pos, get_timestamp());
-		concat_str(&buf_pos, "\033[0m ");
-		concat_int(&buf_pos, philo->id);
-		concat_str(&buf_pos, status);
-		*buf_pos = '\0';
-		write(STDOUT_FILENO, buf, buf_pos - buf);
-	}
+	concat_str(&buf_pos, "\033[1;40m");
+	concat_int(&buf_pos, get_timestamp());
+	concat_str(&buf_pos, "\033[0m ");
+	concat_int(&buf_pos, philo->id);
+	concat_str(&buf_pos, status);
+	*buf_pos = '\0';
+	write(STDOUT_FILENO, buf, buf_pos - buf);
 }
