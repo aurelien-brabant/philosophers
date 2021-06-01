@@ -2,6 +2,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include "philo_three.h"
+#include <string.h>
+#include <stdio.h>
+#include <sys/errno.h>
 
 /*
 ** Get an array which contains the addresses of all the sem_t objects used

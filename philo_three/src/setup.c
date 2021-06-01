@@ -2,9 +2,10 @@
 #include <unistd.h>
 
 #include "philo_three.h"
+#include "philo_error.h"
 
 /*
-** Free all the allocated memory for philo_one.
+** Free all the allocated memory for philo_three.
 ** Can be used if an error occured to free what can be free,
 ** or at the end of the simulation if everything went well.
 */
@@ -12,9 +13,9 @@
 void	destroy_philo_three(t_philosopher *philosophers)
 {
 	if (semaphores_close() != PHILO_THREE_SEM_MAX)
-		dputs("Semaphores could not be closed properly\n", STDERR_FILENO);
+		philo_error_print(ERROR_SEM_CLOSE);
 	if (semaphores_unlink() != PHILO_THREE_SEM_MAX)
-		dputs("Semaphores could not be unlinked properly\n", STDERR_FILENO);
+		philo_error_print(ERROR_SEM_UNLINK);
 	free(philosophers);
 }
 

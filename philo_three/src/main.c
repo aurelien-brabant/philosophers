@@ -54,7 +54,11 @@ int	main(int ac, char **av)
 		return (philo_error_print(ERROR_SEM_INIT));
 	philosophers = philosophers_init();
 	if (philosophers == NULL)
+	{	
+		semaphores_close();
+		semaphores_unlink();
 		return (philo_error_print(ERROR_PHILOSOPHERS_INIT));
+	}
 	run_simulation(philosophers);
 	destroy_philo_three(philosophers);
 	return (EXIT_SUCCESS);

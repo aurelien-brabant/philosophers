@@ -8,7 +8,6 @@ static void	exit_child_process(t_philosopher *philo, int exit_code)
 {
 	free(philo->philosophers);
 	semaphores_close();
-	semaphores_unlink();
 	exit(exit_code);
 }
 

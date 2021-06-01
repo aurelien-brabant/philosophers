@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdlib.h>
 
 #include "lib.h"
 #include "philo_error.h"
@@ -24,4 +25,10 @@ int	philo_error_print(t_philo_error philo_error)
 	write(STDERR_FILENO, g_errors[philo_error], ft_strlen(g_errors[philo_error]));
 	write(STDERR_FILENO, "\n", 1);
 	return (philo_error + 1);
+}
+
+int	philo_error_fatal(t_philo_error error, void (*cleanup)(void *), void *arg)
+{
+	cleanup(arg);
+	exit(philo_error_print(error));
 }
