@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <unistd.h>
 
 #include "philo_three.h"
 
@@ -8,8 +9,12 @@
 ** or at the end of the simulation if everything went well.
 */
 
-void	destroy_philo_two(t_philosopher *philosophers)
+void	destroy_philo_three(t_philosopher *philosophers)
 {
+	if (semaphores_close() != PHILO_THREE_SEM_MAX)
+		dputs("Semaphores could not be closed properly\n", STDERR_FILENO);
+	if (semaphores_unlink() != PHILO_THREE_SEM_MAX)
+		dputs("Semaphores could not be unlinked properly\n", STDERR_FILENO);
 	free(philosophers);
 }
 
@@ -32,6 +37,7 @@ t_philosopher	*philosophers_init(void)
 		philosophers[i].last_meal_timestamp = 0;
 		philosophers[i].state = PHILO_STATE_THINKING; 
 		philosophers[i].eat_count = 0;
+		philosophers[i].philosophers = philosophers;
 		++i;
 	}
 	return (philosophers);

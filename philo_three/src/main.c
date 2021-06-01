@@ -1,11 +1,10 @@
 #include <stdlib.h>
-#include <stdio.h>
-#include <pthread.h>
 #include <sys/wait.h>
 #include <unistd.h>
 #include <signal.h>
 
 #include "philo_three.h"
+#include "philo_error.h"
 
 static void	kill_processes(t_philosopher *philosophers)
 {
@@ -17,11 +16,6 @@ static void	kill_processes(t_philosopher *philosophers)
 	while (i < nb_of_philo)
 		kill(philosophers[i++].pid, SIGKILL);
 }
-
-/*
-** Wait for each thread, which is a philosopher, to terminate properly
-** before moving on.
-*/
 
 void	run_simulation(t_philosopher *philosophers)
 {
@@ -38,10 +32,7 @@ void	run_simulation(t_philosopher *philosophers)
 	{
 		pid = fork();
 		if (pid == 0)
-		{
-			philosophers[i].philosophers = philosophers;
 			spawn_philosopher(&philosophers[i]);
-		}
 		else 
 			philosophers[i].pid = pid;
 		++i;
@@ -58,15 +49,13 @@ int	main(int ac, char **av)
 	t_philosopher		*philosophers;
 	
 	if (!parse_params(ac, av))
-		return (1);
+		return (philo_error_print(ERROR_ARGS_PARSING));
 	if (!semaphores_init())
-		return (1);
+		return (philo_error_print(ERROR_SEM_INIT));
 	philosophers = philosophers_init();
 	if (philosophers == NULL)
-		return (1);
+		return (philo_error_print(ERROR_PHILOSOPHERS_INIT));
 	run_simulation(philosophers);
-	semaphores_destroy();
-	kill_processes(philosophers);
-	destroy_philo_two(philosophers);
-	return (0);
+	destroy_philo_three(philosophers);
+	return (EXIT_SUCCESS);
 }

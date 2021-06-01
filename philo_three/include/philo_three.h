@@ -33,7 +33,7 @@ typedef struct s_philosopher
 }	t_philosopher;
 
 t_philosopher		*philosophers_init(void);
-void				destroy_philo_two(t_philosopher *philosophers);
+void				destroy_philo_three(t_philosopher *philosophers);
 
 void				philo_change_state(t_philosopher *philo, t_philo_state new_state);
 void				output_status(const char *status, t_philosopher *philo);
@@ -42,9 +42,9 @@ void				output_status(const char *status, t_philosopher *philo);
 ** ROUTINES
 */
 
-bool				philo_routine_think(t_philosopher *philo);
-bool				philo_routine_sleep(t_philosopher *philo);
-bool				philo_routine_eat(t_philosopher *philo);
+void				philo_routine_think(t_philosopher *philo);
+void				philo_routine_sleep(t_philosopher *philo);
+void				philo_routine_eat(t_philosopher *philo);
 
 /*
 ** THREAD
@@ -61,8 +61,12 @@ void				*philo_watcher(t_philosopher *philo);
 ** SEMAPHORE 
 */
 
-bool			semaphores_init(void);
-void			semaphores_destroy(void);
 sem_t			**get_semaphores(void);
+bool			semaphores_init(void);
+size_t		semaphores_close(void);
+size_t		semaphores_unlink(void);
+
+void			ft_sem_post(sem_t *sem);
+void			ft_sem_wait(sem_t *sem);
 
 #endif
