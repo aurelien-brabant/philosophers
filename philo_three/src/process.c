@@ -40,12 +40,12 @@ void	process_start_children(t_philosopher *philosophers)
 	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
 	while (i < nb_of_philo)
 	{
+		pid = fork();
 		if (pid == -1)
 		{
 			philo_error_print(ERROR_FORK);	
 			return ;
 		}
-		pid = fork();
 		if (pid == 0)
 			spawn_philosopher(&philosophers[i]);
 		else
