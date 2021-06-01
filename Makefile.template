@@ -1,5 +1,5 @@
 CC			:= clang
-CFLAGS		:= -g -Wall -Wextra -Werror -Iinclude -I../lib/include
+CFLAGS		:= -Wall -Wextra -Werror -Iinclude -I../lib/include
 LD			:= clang
 LD_FLAGS		:= -g
 

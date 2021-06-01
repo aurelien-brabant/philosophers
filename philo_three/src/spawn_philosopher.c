@@ -27,7 +27,7 @@ static void	*spawn_watcher(t_philosopher *philo)
 			philo_change_state(philo, PHILO_STATE_DEAD);
 			exit_child_process(philo, EXIT_CHILD_DIED);
 		}
-		usleep(1000);
+		usleep(100);
 	}
 	return (NULL);
 }
@@ -52,11 +52,13 @@ void	spawn_philosopher(t_philosopher *philo)
 	while (1)
 	{
 		philo_routine_eat(philo);
+		/*
 		if (philo->eat_count >= max_eat)
 		{
 			philo->is_at_table = false;
 			break ;
 		}
+		*/
 		philo_routine_sleep(philo);
 		philo_routine_think(philo);
 		usleep(100);

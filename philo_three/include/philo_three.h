@@ -8,6 +8,7 @@
 
 # define SEM_NM_FORK "/fork"
 # define SEM_NM_STATE "/state"
+# define SEM_NM_PROC_COUNT "/proccount"
 
 # define EXIT_CHILD_HAS_EATEN 0
 # define EXIT_CHILD_DIED 1

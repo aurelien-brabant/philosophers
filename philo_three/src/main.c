@@ -26,8 +26,8 @@ void	run_simulation(t_philosopher *philosophers)
 
 	i = 0;
 	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
-	get_timestamp();
 	output_status(NULL, NULL);
+	get_timestamp();
 	while (i < nb_of_philo)
 	{
 		pid = fork();
