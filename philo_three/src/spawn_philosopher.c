@@ -23,7 +23,7 @@ static void	*spawn_watcher(t_philosopher *philo)
 		if (get_timestamp() >= philo->last_meal_timestamp + time_to_die)
 		{
 			philo->is_at_table = false;
-			ft_sem_wait(state_sem);
+			sem_wait(state_sem);
 			philo_change_state(philo, PHILO_STATE_DEAD);
 			exit_child_process(philo, EXIT_CHILD_DIED);
 		}
@@ -46,19 +46,18 @@ void	spawn_philosopher(t_philosopher *philo)
 	pthread_t			watcher;
 	unsigned long long	max_eat;
 
+	get_timestamp();
 	philo->is_at_table = true;
 	max_eat = get_params()[NUMBER_OF_TIMES_EACH_PHILOSOPHER_MUST_EAT];
 	pthread_create(&watcher, NULL, (void *)(void *)&spawn_watcher, philo);
 	while (1)
 	{
 		philo_routine_eat(philo);
-		/*
 		if (philo->eat_count >= max_eat)
 		{
 			philo->is_at_table = false;
 			break ;
 		}
-		*/
 		philo_routine_sleep(philo);
 		philo_routine_think(philo);
 		usleep(100);

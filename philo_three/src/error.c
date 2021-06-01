@@ -14,7 +14,8 @@ static const char *g_errors[] = {
 	"Could not initialize philosophers",
 	"Thread could not created",
 	"Thread could not be detached properly",
-	"Thread could not be joined"
+	"Thread could not be joined",
+	"Could not fork process"
 };
 
 static const char	*g_error_prefix = "\033[1;31mError: \033[0m";

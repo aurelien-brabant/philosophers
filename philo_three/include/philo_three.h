@@ -4,11 +4,10 @@
 # include <semaphore.h>
 # include "lib.h"
 # define FORK_NOT_OWNED 0
-# define STATUS_BUFFER_SIZE 1000000
+# define STATUS_BUFFER_SIZE 10000
 
 # define SEM_NM_FORK "/fork"
 # define SEM_NM_STATE "/state"
-# define SEM_NM_PROC_COUNT "/proccount"
 
 # define EXIT_CHILD_HAS_EATEN 0
 # define EXIT_CHILD_DIED 1
@@ -48,12 +47,13 @@ void				philo_routine_sleep(t_philosopher *philo);
 void				philo_routine_eat(t_philosopher *philo);
 
 /*
-** THREAD
+** PROCESS
 */
 
-void				thread_terminate_simulation(t_philosopher *philosophers);
-int				thread_philo_start_range(t_philosopher *philosophers,
-						unsigned long long low, unsigned long long high);
+
+void				process_kill_children(t_philosopher *philosophers);
+void				process_start_children(t_philosopher *philosophers);
+void				process_wait_for_children(t_philosopher *philosophers);
 
 void				spawn_philosopher(t_philosopher *philo);
 void				*philo_watcher(t_philosopher *philo);

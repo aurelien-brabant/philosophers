@@ -39,6 +39,7 @@ t_philosopher	*philosophers_init(void)
 		philosophers[i].state = PHILO_STATE_THINKING; 
 		philosophers[i].eat_count = 0;
 		philosophers[i].philosophers = philosophers;
+		philosophers[i].pid = 0;
 		++i;
 	}
 	return (philosophers);

@@ -6,42 +6,12 @@
 #include "philo_three.h"
 #include "philo_error.h"
 
-static void	kill_processes(t_philosopher *philosophers)
-{
-	unsigned long long	nb_of_philo;
-	unsigned long long	i;
-
-	i = 0;
-	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
-	while (i < nb_of_philo)
-		kill(philosophers[i++].pid, SIGKILL);
-}
-
 void	run_simulation(t_philosopher *philosophers)
 {
-	unsigned long long	i;
-	unsigned long long	nb_of_philo;
-	int					pid;
-	int					status;
-
-	i = 0;
-	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
 	output_status(NULL, NULL);
 	get_timestamp();
-	while (i < nb_of_philo)
-	{
-		pid = fork();
-		if (pid == 0)
-			spawn_philosopher(&philosophers[i]);
-		else 
-			philosophers[i].pid = pid;
-		++i;
-	}
-	i = 0;
-	while (waitpid(-1, &status, 0) != -1 && status == 0)
-		++i;
-	if (i < nb_of_philo)
-		kill_processes(philosophers);
+	process_start_children(philosophers);
+	process_wait_for_children(philosophers);
 }
 
 int	main(int ac, char **av)

@@ -13,9 +13,10 @@ typedef enum	e_philo_error
 	ERROR_THREAD_CREATE,
 	ERROR_THREAD_DETACH,
 	ERROR_THREAD_JOIN,
-	
+	ERROR_FORK
 }	t_philo_error;
 
 int	philo_error_print(t_philo_error philo_error);
+int	philo_error_fatal(t_philo_error error, void (*cleanup)(void *), void *arg);
 
 #endif
