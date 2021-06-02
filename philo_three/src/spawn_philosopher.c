@@ -28,7 +28,7 @@ static void	*spawn_watcher(t_philosopher *philo)
 			philo_change_state(philo, PHILO_STATE_DEAD);
 			exit_child_process(philo, EXIT_CHILD_DIED);
 		}
-		usleep(100);
+		usleep(1000);
 	}
 	return (NULL);
 }
