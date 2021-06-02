@@ -42,6 +42,11 @@ size_t	semaphores_unlink(void)
 ** The number of successfully closed semaphores is returned. This number
 ** should be equal to PHILO_THREE_SEM_MAX if all the semaphores have been
 ** closed without error.
+**
+** /!\ For unknown reasons, any call to sem_close *CAN* produce an infinite loop
+** on MacOS. It appears that posting the semaphore before the call can solve
+** the issue, but that's definitely not something we can do if we want the output
+** to be definitely locked after the death of a philosopher.
 */
 
 size_t	semaphores_close(void)

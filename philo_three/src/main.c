@@ -1,10 +1,12 @@
 #include <stdlib.h>
-#include <sys/wait.h>
-#include <unistd.h>
-#include <signal.h>
 
 #include "philo_three.h"
 #include "philo_error.h"
+
+/*
+** Initialize output buffer and timestamp, that will be copied by each forked
+** process.
+*/
 
 void	run_simulation(t_philosopher *philosophers)
 {

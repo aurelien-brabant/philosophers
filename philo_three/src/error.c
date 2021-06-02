@@ -5,7 +5,8 @@
 #include "philo_error.h"
 
 static const char *g_errors[] = {
-	"Could not parse command line arguments",
+	"Could not parse command line arguments\nUsage: ./philo_three <nb_of_philo> "
+	"<time_to_die> <time_to_eat> <time_to_sleep> [number_of_times_each_philo_must_eat] ",
 	"Could not initialize semaphores properly",
 	"Could not close all semaphores properly",
 	"Could not unlink all semaphores properly",
@@ -26,10 +27,4 @@ int	philo_error_print(t_philo_error philo_error)
 	write(STDERR_FILENO, g_errors[philo_error], ft_strlen(g_errors[philo_error]));
 	write(STDERR_FILENO, "\n", 1);
 	return (philo_error + 1);
-}
-
-int	philo_error_fatal(t_philo_error error, void (*cleanup)(void *), void *arg)
-{
-	cleanup(arg);
-	exit(philo_error_print(error));
 }
