@@ -3,8 +3,10 @@
 # include <stddef.h>
 # include <stdbool.h>
 
-/* These two enums are usable in the exact same way no matter the version
-of philosopher */
+/* 
+** These two enums are usable in the exact same way no matter the version
+** of philosopher 
+*/
 
 typedef enum e_philo_param
 {
@@ -24,17 +26,15 @@ typedef enum e_philo_state
 	PHILO_STATE_THINKING,
 }	t_philo_state;
 
-typedef unsigned long long int t_timestamp;
+typedef unsigned long long int	t_timestamp;
 
-size_t			ft_strlen(const char *s);
-bool			parseexit_code_uint(const char *s, unsigned long long *n);
-int				dputs(const char *s, int fd);
-int				error_out(const char *msg, int error_code);
+size_t				ft_strlen(const char *s);
+int					dputs(const char *s, int fd);
 bool				parse_params(int ac, char **av);
-t_timestamp 		get_timestamp(void);
+t_timestamp			get_timestamp(void);
 unsigned long long	*get_params(void);
-void			ft_msleep(unsigned long long ms);
-const char	*get_state_string(t_philo_state state);
-bool			parse_uint(const char *sint, unsigned long long *n);
+void				ft_msleep(unsigned long long ms);
+const char			*get_state_string(t_philo_state state);
+bool				parse_uint(const char *sint, unsigned long long *n);
 
 #endif

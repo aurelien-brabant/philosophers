@@ -14,10 +14,10 @@ t_timestamp	get_timestamp(void)
 {
 	static t_timestamp	initial_ts = 0;
 	t_timestamp			current_ts;		
-	struct timeval				tval;
-	
+	struct timeval		tval;
+
 	gettimeofday(&tval, NULL);
-	current_ts = tval.tv_sec * 1000 + tval.tv_usec / 1000; 
+	current_ts = tval.tv_sec * 1000 + tval.tv_usec / 1000;
 	if (initial_ts == 0)
 		initial_ts = current_ts;
 	return (current_ts - initial_ts);
