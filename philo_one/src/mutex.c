@@ -1,33 +1,49 @@
 #include "philo_one.h"
+#include "philo_error.h"
 
 /*
 ** Destroy global mutexes, freeing all the memory allocated for it.
+**
+** The number of successfully destroyed mutexes is returned, which should be
+** equal to PHILO_TWO
 */
 
-void	destroy_mutexes(void)
+size_t	destroy_mutexes(void)
 {
 	size_t			i;
+	size_t			destroyed;
 	pthread_mutex_t	*mutexes;
 
 	i = 0;
+	destroyed = 0;
 	mutexes = get_mutexes();
 	while (i < PHILO_ONE_TOTAL_MUTEX)
-		pthread_mutex_destroy(&mutexes[i++]);
+		destroyed += (pthread_mutex_destroy(&mutexes[i++]) == 0);
+	return (destroyed);
 }
 
 /*
 ** Initialize global mutexes.
 */
 
-void	init_mutexes(void)
+bool	init_mutexes(void)
 {
-	size_t			i;
+	int		i;
 	pthread_mutex_t	*mutexes;
 
 	i = 0;
 	mutexes = get_mutexes();
 	while (i < PHILO_ONE_TOTAL_MUTEX)
-		pthread_mutex_init(&mutexes[i++], NULL);
+	{
+		if (pthread_mutex_init(&mutexes[i], NULL) != 0)
+		{
+			while (--i >= 0)
+				pthread_mutex_destroy(&mutexes[i]);
+			return (false);
+		}
+		++i;
+	}
+	return (true);
 }
 
 /*

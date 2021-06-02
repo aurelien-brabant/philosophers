@@ -1,4 +1,5 @@
 #include "philo_one.h"
+#include "philo_error.h"
 
 /*
 ** Attempt to join all the threads, each one being a philosopher
@@ -14,8 +15,8 @@
 
 void	thread_terminate_simulation(t_philosopher *philosophers)
 {
-	unsigned long long nb_of_philo;
-	unsigned long long i;
+	unsigned long long	nb_of_philo;
+	unsigned long long	i;
 
 	i = 0;
 	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
@@ -44,7 +45,10 @@ int	thread_philo_start_parity(t_philosopher *philosophers, bool start_even_first
 		pthread_create_ret = pthread_create(&philosophers[i].thread, NULL,
 			(void *)(void *)&spawn_philosopher, &philosophers[i]);
 		if (pthread_create_ret != 0)
+		{
+			philo_error_print(ERROR_THREAD_CREATE);
 			return (pthread_create_ret);
+		}
 		i += 2;
 	}
 	return (0);

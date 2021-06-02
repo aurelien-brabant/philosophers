@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "philo_one.h"
+#include "philo_error.h"
 
 /*
 ** Wait for each thread, which is a philosopher, to terminate properly
@@ -31,8 +32,11 @@ static void	run_simulation(t_philosopher *philosophers)
 	usleep(1000);
 	if (thread_philo_start_parity(philosophers, true) != 0)
 		return ;
-	pthread_create(&philo_watcher_thread, NULL, (void *)(void *)&philo_watcher, philosophers);
-	pthread_join(philo_watcher_thread, NULL);
+	if (pthread_create(&philo_watcher_thread, NULL,
+				(void *)(void *)&philo_watcher, philosophers) != 0)
+		philo_error_print(ERROR_THREAD_CREATE);
+	else
+		pthread_join(philo_watcher_thread, NULL);
 }
 
 int	main(int ac, char **av)
@@ -40,11 +44,12 @@ int	main(int ac, char **av)
 	t_philosopher		*philosophers;
 	
 	if (!parse_params(ac, av))
-		return (1);
+		return (philo_error_print(ERROR_ARGS_PARSING));
 	philosophers = philosophers_init();
 	if (philosophers == NULL)
-		return (1);
-	init_mutexes();
+		return (philo_error_print(ERROR_PHILOSOPHERS_INIT));
+	if (!init_mutexes())
+		return (philo_error_print(ERROR_MUTEX_INIT));
 	run_simulation(philosophers);
 	thread_terminate_simulation(philosophers);
 	destroy_philo_one(philosophers);

@@ -61,8 +61,8 @@ void				*philo_watcher(t_philosopher *philo);
 ** MUTEX
 */
 
-void				init_mutexes(void);
-void				destroy_mutexes(void);
+bool				init_mutexes(void);
+size_t			destroy_mutexes(void);
 pthread_mutex_t	*get_mutexes(void);
 
 #endif

@@ -1,6 +1,7 @@
 #include <stdlib.h>
 
 #include "philo_one.h"
+#include "philo_error.h"
 
 static void	give_forks(t_philosopher *philo, t_fork *forks)
 {
@@ -33,7 +34,17 @@ static t_fork	*forks_init(void)
 		return (NULL);
 	i = 0;
 	while (i < nb_of_philo)
-		pthread_mutex_init(&forks[i++], NULL);
+	{
+		if (pthread_mutex_init(&forks[i], NULL) != 0)
+		{
+			while (i-- < 0)
+				pthread_mutex_destroy(&forks[i]);
+			pthread_mutex_destroy(&forks[i]);
+			philo_error_print(ERROR_MUTEX_INIT);
+			return (NULL);
+		}
+		++i;
+	}
 	return (forks);
 }
 
@@ -45,7 +56,10 @@ static void	destroy_forks(t_fork *forks)
 	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
 	i = 0;
 	while (i < nb_of_philo)
-		pthread_mutex_destroy(&forks[i++]);
+	{
+		if (pthread_mutex_destroy(&forks[i++]) != 0)
+			philo_error_print(ERROR_MUTEX_CLOSE);
+	}
 }
 
 /*
@@ -56,7 +70,8 @@ static void	destroy_forks(t_fork *forks)
 
 void	destroy_philo_one(t_philosopher *philosophers)
 {
-	destroy_mutexes();
+	if (destroy_mutexes() != PHILO_ONE_TOTAL_MUTEX)
+		philo_error_print(ERROR_MUTEX_CLOSE);
 	destroy_forks(philosophers[0].forks);
 	free(philosophers[0].forks);
 	free(philosophers[0].health_check);
