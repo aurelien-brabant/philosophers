@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdio.h>
 
 #include "lib.h"
 
@@ -19,14 +20,14 @@ bool	parse_uint(const char *sint, unsigned long long *n)
 
 	*n = 0;
 	if (*sint == '\0')
-		return (error_out("parse_uint: empty string.", false));
+		return (false);
 	while (*sint != '\0')
 	{
 		if (!(*sint >= '0' && *sint <= '9'))
-			return (error_out("parse_uint: not a number (!isdigit).", false));
+			return (false);
 		new_val = *n * 10 + *sint++ - 48;
 		if (new_val < *n)
-			return (error_out("parse_uint: overflow detected.", false));
+			return (false);
 		*n = new_val;
 	}
 	return (true);
