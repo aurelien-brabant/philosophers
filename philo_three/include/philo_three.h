@@ -15,18 +15,17 @@
 typedef enum e_philo_two_semaphore
 {
 	PHILO_THREE_SEM_STATE = 0,
-	PHILO_THREE_SEM_FORK, 
-	PHILO_THREE_SEM_MAX	
+	PHILO_THREE_SEM_FORK,
+	PHILO_THREE_SEM_MAX
 }	t_philo_two_semaphore;
-
 
 typedef struct s_philosopher
 {
 	int						pid;
-	bool						*health_check;
+	bool					*health_check;
 	unsigned long long		id;
 	t_philo_state			state;
-	t_timestamp			last_meal_timestamp;
+	t_timestamp				last_meal_timestamp;
 	unsigned long long		eat_count;
 	bool					is_at_table;
 	struct s_philosopher	*philosophers;
@@ -35,7 +34,8 @@ typedef struct s_philosopher
 t_philosopher		*philosophers_init(void);
 void				destroy_philo_three(t_philosopher *philosophers);
 
-void				philo_change_state(t_philosopher *philo, t_philo_state new_state);
+void				philo_change_state(t_philosopher *philo,
+						t_philo_state new_state);
 void				output_status(const char *status, t_philosopher *philo);
 
 /*
@@ -50,7 +50,6 @@ void				philo_routine_eat(t_philosopher *philo);
 ** PROCESS
 */
 
-
 void				process_kill_children(t_philosopher *philosophers);
 void				process_start_children(t_philosopher *philosophers);
 void				process_wait_for_children(t_philosopher *philosophers);
@@ -62,12 +61,9 @@ void				*philo_watcher(t_philosopher *philo);
 ** SEMAPHORE 
 */
 
-sem_t			**get_semaphores(void);
-bool			semaphores_init(void);
-size_t		semaphores_close(void);
-size_t		semaphores_unlink(void);
-
-void			ft_sem_post(sem_t *sem);
-void			ft_sem_wait(sem_t *sem);
+sem_t				**get_semaphores(void);
+bool				semaphores_init(void);
+size_t				semaphores_close(void);
+size_t				semaphores_unlink(void);
 
 #endif

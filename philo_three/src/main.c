@@ -19,7 +19,7 @@ void	run_simulation(t_philosopher *philosophers)
 int	main(int ac, char **av)
 {
 	t_philosopher		*philosophers;
-	
+
 	if (!parse_params(ac, av))
 		return (philo_error_print(ERROR_ARGS_PARSING));
 	if (!semaphores_init())

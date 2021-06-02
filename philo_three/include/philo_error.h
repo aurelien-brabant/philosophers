@@ -1,7 +1,7 @@
 #ifndef PHILO_ERROR_H
 # define PHILO_ERROR_H
 
-typedef enum	e_philo_error
+typedef enum e_philo_error
 {
 	ERROR_ARGS_PARSING = 0,
 	ERROR_SEM_INIT,

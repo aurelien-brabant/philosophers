@@ -43,7 +43,7 @@ void	process_start_children(t_philosopher *philosophers)
 		pid = fork();
 		if (pid == -1)
 		{
-			philo_error_print(ERROR_FORK);	
+			philo_error_print(ERROR_FORK);
 			return ;
 		}
 		if (pid == 0)
@@ -55,7 +55,7 @@ void	process_start_children(t_philosopher *philosophers)
 
 void	process_wait_for_children(t_philosopher *philosophers)
 {
-	int				status;
+	int					status;
 	unsigned long long	i;
 
 	i = 0;

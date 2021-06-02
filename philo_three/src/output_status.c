@@ -10,7 +10,7 @@ static size_t	int_char_size(unsigned long long n)
 	while (n / 10)
 	{
 		++i;
-		n /= 10;	
+		n /= 10;
 	}
 	return (i);
 }
@@ -24,7 +24,7 @@ static void	concat_int(char **buf, unsigned long long n)
 	i = char_size - 1;
 	while (1)
 	{
-		(*buf)[i] = n % 10 + 48; 
+		(*buf)[i] = n % 10 + 48;
 		if (i-- == 0)
 			break ;
 		n /= 10;
@@ -53,17 +53,15 @@ static void	concat_str(char **buf, const char *s)
 ** here to build this string. The fact the buffer is static means that it is
 ** going to be allocated at the first call only, and not at every call, which
 ** highly reduces the produced overhead. output_status(NULL, NULL) is issued
-** in the initialization phase to allocate the buffer before the actual simulation
-** begins.
+** in the initialization phase to allocate the buffer before the actual 
+** simulation begins.
 */
-
-#include <stdio.h>
 
 void	output_status(const char *status, t_philosopher *philo)
 {
 	static char		buf[STATUS_BUFFER_SIZE];
-	char				*buf_pos;
-	
+	char			*buf_pos;
+
 	if (philo == NULL)
 		return ;
 	buf_pos = buf;

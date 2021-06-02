@@ -79,8 +79,9 @@ bool	semaphores_init(void)
 
 	sems = get_semaphores();
 	semaphores_unlink();
-	sems[PHILO_THREE_SEM_FORK] = sem_open(SEM_NM_FORK, O_CREAT, 0644, get_params()[NUMBER_OF_PHILOSOPHERS]);
+	sems[PHILO_THREE_SEM_FORK] = sem_open(SEM_NM_FORK, O_CREAT, 0644,
+			get_params()[NUMBER_OF_PHILOSOPHERS]);
 	sems[PHILO_THREE_SEM_STATE] = sem_open(SEM_NM_STATE, O_CREAT, 0644, 1);
-	return (sems[PHILO_THREE_SEM_FORK] != SEM_FAILED 
+	return (sems[PHILO_THREE_SEM_FORK] != SEM_FAILED
 		&& sems[PHILO_THREE_SEM_STATE] != SEM_FAILED);
 }
