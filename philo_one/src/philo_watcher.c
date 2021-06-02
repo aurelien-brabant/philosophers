@@ -17,7 +17,8 @@
 
 static bool	is_philosopher_healthy(t_philosopher *philo)
 {
-	if (get_timestamp() >= philo->last_meal_timestamp + get_params()[TIME_TO_DIE])
+	if (get_timestamp() >= philo->last_meal_timestamp
+		+ get_params()[TIME_TO_DIE])
 	{
 		pthread_mutex_lock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
 		philo_change_state(philo, PHILO_STATE_DEAD);
@@ -38,7 +39,8 @@ static bool	is_philosopher_healthy(t_philosopher *philo)
 ** philosophers have eaten at least the required amount of times (only if this
 ** information is supplied).
 **
-** @param	the argument passed to pthread_create, which is the array of philosophers.
+** @param	the argument passed to pthread_create, which is the array of 
+** philosophers.
 **
 ** @return	the same array of philosophers. The return value is not used.
 */
@@ -58,7 +60,8 @@ void	*philo_watcher(t_philosopher *philosophers)
 	{
 		if (!is_philosopher_healthy(&philosophers[i]))
 			return (philosophers);
-		if (philosophers[i].eat_count >= max_eat && ++nb_of_full_philo == nb_of_philo)
+		if (philosophers[i].eat_count >= max_eat
+			&& ++nb_of_full_philo == nb_of_philo)
 			break ;
 		if (++i == nb_of_philo)
 		{

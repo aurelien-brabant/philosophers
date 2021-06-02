@@ -80,8 +80,8 @@ void	destroy_philo_one(t_philosopher *philosophers)
 
 t_philosopher	*philosophers_init(void)
 {
-	t_philosopher	*philosophers;
-	t_fork			*forks;
+	t_philosopher		*philosophers;
+	t_fork				*forks;
 	unsigned long long	nb_of_philo;
 	unsigned long long	i;
 
@@ -98,7 +98,7 @@ t_philosopher	*philosophers_init(void)
 		philosophers[i].forks = forks;
 		philosophers[i].id = i + 1;
 		philosophers[i].last_meal_timestamp = 0;
-		philosophers[i].state = PHILO_STATE_THINKING; 
+		philosophers[i].state = PHILO_STATE_THINKING;
 		philosophers[i].eat_count = 0;
 		give_forks(&philosophers[i], forks);
 		++i;

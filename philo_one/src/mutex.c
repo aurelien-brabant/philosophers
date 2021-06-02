@@ -28,7 +28,7 @@ size_t	destroy_mutexes(void)
 
 bool	init_mutexes(void)
 {
-	int		i;
+	int				i;
 	pthread_mutex_t	*mutexes;
 
 	i = 0;
@@ -50,9 +50,9 @@ bool	init_mutexes(void)
 ** Get global mutexes from anywhere. 
 */
 
-pthread_mutex_t *get_mutexes(void)
+pthread_mutex_t	*get_mutexes(void)
 {
-    static pthread_mutex_t  mutexes[PHILO_ONE_TOTAL_MUTEX];
+	static pthread_mutex_t	mutexes[PHILO_ONE_TOTAL_MUTEX];
 
-    return (mutexes);
+	return (mutexes);
 }
