@@ -1,6 +1,7 @@
 #include <unistd.h>
 
 #include "philo_two.h"
+#include "philo_error.h"
 
 /*
 ** Attempt to join all the threads, each one being a philosopher
@@ -16,8 +17,8 @@
 
 void	thread_terminate_simulation(t_philosopher *philosophers)
 {
-	unsigned long long nb_of_philo;
-	unsigned long long i;
+	unsigned long long	nb_of_philo;
+	unsigned long long	i;
 
 	i = 0;
 	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
@@ -25,16 +26,17 @@ void	thread_terminate_simulation(t_philosopher *philosophers)
 		pthread_join(philosophers[i++].thread, NULL);
 }
 
-int	thread_philo_start_range(t_philosopher *philosophers, unsigned long long low, unsigned long long high)
+int	thread_philo_start_range(t_philosopher *philosophers,
+	unsigned long long low, unsigned long long high)
 {
 	int					pthread_create_ret;
 
 	while (low < high)
 	{
 		pthread_create_ret = pthread_create(&philosophers[low].thread, NULL,
-			(void *)(void *)&spawn_philosopher, &philosophers[low]);
+				(void *)(void *)&spawn_philosopher, &philosophers[low]);
 		if (pthread_create_ret != 0)
-			return (pthread_create_ret);
+			return (philo_error_print(ERROR_THREAD_CREATE));
 		++low;
 	}
 	return (0);

@@ -10,14 +10,15 @@
 
 void	destroy_philo_two(t_philosopher *philosophers)
 {
-	semaphores_destroy();
+	semaphores_close();
+	semaphores_unlink();
 	free(philosophers[0].health_check);
 	free(philosophers);
 }
 
 t_philosopher	*philosophers_init(void)
 {
-	t_philosopher	*philosophers;
+	t_philosopher		*philosophers;
 	unsigned long long	nb_of_philo;
 	unsigned long long	i;
 
@@ -30,7 +31,7 @@ t_philosopher	*philosophers_init(void)
 	{
 		philosophers[i].id = i + 1;
 		philosophers[i].last_meal_timestamp = 0;
-		philosophers[i].state = PHILO_STATE_THINKING; 
+		philosophers[i].state = PHILO_STATE_THINKING;
 		philosophers[i].eat_count = 0;
 		++i;
 	}

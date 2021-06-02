@@ -2,7 +2,6 @@
   {
     "arguments": [
       "/usr/bin/clang-11",
-      "-g",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -20,7 +19,6 @@
   {
     "arguments": [
       "/usr/bin/clang-11",
-      "-g",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -38,7 +36,6 @@
   {
     "arguments": [
       "/usr/bin/clang-11",
-      "-g",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -56,7 +53,6 @@
   {
     "arguments": [
       "/usr/bin/clang-11",
-      "-g",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -74,7 +70,6 @@
   {
     "arguments": [
       "/usr/bin/clang-11",
-      "-g",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -92,7 +87,6 @@
   {
     "arguments": [
       "/usr/bin/clang-11",
-      "-g",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -110,7 +104,6 @@
   {
     "arguments": [
       "/usr/bin/clang-11",
-      "-g",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -128,7 +121,6 @@
   {
     "arguments": [
       "/usr/bin/clang-11",
-      "-g",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -146,7 +138,6 @@
   {
     "arguments": [
       "/usr/bin/clang-11",
-      "-g",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -154,53 +145,16 @@
       "-I../lib/include",
       "-c",
       "-o",
-      "src/ft_strlen.o",
-      "src/ft_strlen.c"
+      "src/semaphore.o",
+      "src/semaphore.c"
     ],
-    "directory": "/home/abrabant/Prog/42/philosophers/lib",
-    "file": "/home/abrabant/Prog/42/philosophers/lib/src/ft_strlen.c",
-    "output": "/home/abrabant/Prog/42/philosophers/lib/src/ft_strlen.o"
+    "directory": "/home/abrabant/Prog/42/philosophers/philo_two",
+    "file": "/home/abrabant/Prog/42/philosophers/philo_two/src/semaphore.c",
+    "output": "/home/abrabant/Prog/42/philosophers/philo_two/src/semaphore.o"
   },
   {
     "arguments": [
       "/usr/bin/clang-11",
-      "-g",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Iinclude",
-      "-I../lib/include",
-      "-c",
-      "-o",
-      "src/dputs.o",
-      "src/dputs.c"
-    ],
-    "directory": "/home/abrabant/Prog/42/philosophers/lib",
-    "file": "/home/abrabant/Prog/42/philosophers/lib/src/dputs.c",
-    "output": "/home/abrabant/Prog/42/philosophers/lib/src/dputs.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang-11",
-      "-g",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Iinclude",
-      "-I../lib/include",
-      "-c",
-      "-o",
-      "src/parse_uint.o",
-      "src/parse_uint.c"
-    ],
-    "directory": "/home/abrabant/Prog/42/philosophers/lib",
-    "file": "/home/abrabant/Prog/42/philosophers/lib/src/parse_uint.c",
-    "output": "/home/abrabant/Prog/42/philosophers/lib/src/parse_uint.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang-11",
-      "-g",
       "-Wall",
       "-Wextra",
       "-Werror",
@@ -211,98 +165,8 @@
       "src/error.o",
       "src/error.c"
     ],
-    "directory": "/home/abrabant/Prog/42/philosophers/lib",
-    "file": "/home/abrabant/Prog/42/philosophers/lib/src/error.c",
-    "output": "/home/abrabant/Prog/42/philosophers/lib/src/error.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang-11",
-      "-g",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Iinclude",
-      "-I../lib/include",
-      "-c",
-      "-o",
-      "src/parse_params.o",
-      "src/parse_params.c"
-    ],
-    "directory": "/home/abrabant/Prog/42/philosophers/lib",
-    "file": "/home/abrabant/Prog/42/philosophers/lib/src/parse_params.c",
-    "output": "/home/abrabant/Prog/42/philosophers/lib/src/parse_params.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang-11",
-      "-g",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Iinclude",
-      "-I../lib/include",
-      "-c",
-      "-o",
-      "src/get_timestamp.o",
-      "src/get_timestamp.c"
-    ],
-    "directory": "/home/abrabant/Prog/42/philosophers/lib",
-    "file": "/home/abrabant/Prog/42/philosophers/lib/src/get_timestamp.c",
-    "output": "/home/abrabant/Prog/42/philosophers/lib/src/get_timestamp.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang-11",
-      "-g",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Iinclude",
-      "-I../lib/include",
-      "-c",
-      "-o",
-      "src/get_params.o",
-      "src/get_params.c"
-    ],
-    "directory": "/home/abrabant/Prog/42/philosophers/lib",
-    "file": "/home/abrabant/Prog/42/philosophers/lib/src/get_params.c",
-    "output": "/home/abrabant/Prog/42/philosophers/lib/src/get_params.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang-11",
-      "-g",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Iinclude",
-      "-I../lib/include",
-      "-c",
-      "-o",
-      "src/ft_msleep.o",
-      "src/ft_msleep.c"
-    ],
-    "directory": "/home/abrabant/Prog/42/philosophers/lib",
-    "file": "/home/abrabant/Prog/42/philosophers/lib/src/ft_msleep.c",
-    "output": "/home/abrabant/Prog/42/philosophers/lib/src/ft_msleep.o"
-  },
-  {
-    "arguments": [
-      "/usr/bin/clang-11",
-      "-g",
-      "-Wall",
-      "-Wextra",
-      "-Werror",
-      "-Iinclude",
-      "-I../lib/include",
-      "-c",
-      "-o",
-      "src/get_state_string.o",
-      "src/get_state_string.c"
-    ],
-    "directory": "/home/abrabant/Prog/42/philosophers/lib",
-    "file": "/home/abrabant/Prog/42/philosophers/lib/src/get_state_string.c",
-    "output": "/home/abrabant/Prog/42/philosophers/lib/src/get_state_string.o"
+    "directory": "/home/abrabant/Prog/42/philosophers/philo_two",
+    "file": "/home/abrabant/Prog/42/philosophers/philo_two/src/error.c",
+    "output": "/home/abrabant/Prog/42/philosophers/philo_two/src/error.o"
   }
 ]

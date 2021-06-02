@@ -5,8 +5,8 @@ void	philo_routine_eat(t_philosopher *philo)
 	sem_t	*fork_sem;
 	sem_t	*state_sem;
 
-	fork_sem = get_semaphores()[PHILO_TWO_FORK_SEMAPHORE];
-	state_sem = get_semaphores()[PHILO_TWO_STATE_SEMAPHORE];
+	fork_sem = get_semaphores()[PHILO_TWO_SEM_FORK];
+	state_sem = get_semaphores()[PHILO_TWO_SEM_STATE];
 	sem_wait(fork_sem);
 	sem_wait(fork_sem);
 	sem_wait(state_sem);
@@ -25,7 +25,7 @@ void	philo_routine_sleep(t_philosopher *philo)
 {
 	sem_t	*state_sem;
 
-	state_sem = get_semaphores()[PHILO_TWO_STATE_SEMAPHORE];
+	state_sem = get_semaphores()[PHILO_TWO_SEM_STATE];
 	sem_wait(state_sem);
 	philo_change_state(philo, PHILO_STATE_SLEEPING);
 	sem_post(state_sem);
@@ -36,7 +36,7 @@ void	philo_routine_think(t_philosopher *philo)
 {
 	sem_t	*state_sem;
 
-	state_sem = get_semaphores()[PHILO_TWO_STATE_SEMAPHORE];
+	state_sem = get_semaphores()[PHILO_TWO_SEM_STATE];
 	sem_wait(state_sem);
 	philo_change_state(philo, PHILO_STATE_THINKING);
 	sem_post(state_sem);
