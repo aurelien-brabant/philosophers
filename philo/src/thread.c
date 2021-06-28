@@ -1,5 +1,4 @@
-#include "philo_one.h"
-#include "philo_error.h"
+#include "philo.h"
 
 /*
 ** Attempt to join all the threads, each one being a philosopher
@@ -24,23 +23,36 @@ void	thread_terminate_simulation(t_philosopher *philosophers)
 		pthread_join(philosophers[i++].thread, NULL);
 }
 
-/*
-** Start all philosophers which's id is odd or even in a single call.
-** This allows better synchronization in philo_one.
-** The start_even_first boolean determines if only even philosophers are going
-** to be started. If it is set to false, then only odd philosophers will be
-** started.
-*/
-
-int	thread_philo_start_parity(t_philosopher *philosophers,
-		bool start_even_first)
+int	thread_philo_start_even(t_philosopher *philosophers)
 {
 	unsigned long long	i;
 	unsigned long long	nb_of_philo;
 	int					pthread_create_ret;
 
 	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
-	i = start_even_first;
+	i = 0;
+	while (i < nb_of_philo)
+	{
+		pthread_create_ret = pthread_create(&philosophers[i].thread, NULL,
+				(void *)(void *)&spawn_philosopher, &philosophers[i]);
+		if (pthread_create_ret != 0)
+		{
+			philo_error_print(ERROR_THREAD_CREATE);
+			return (pthread_create_ret);
+		}
+		i += 2;
+	}
+	return (0);
+}
+
+int	thread_philo_start_odd(t_philosopher *philosophers)
+{
+	unsigned long long	i;
+	unsigned long long	nb_of_philo;
+	int					pthread_create_ret;
+
+	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
+	i = 1;
 	while (i < nb_of_philo)
 	{
 		pthread_create_ret = pthread_create(&philosophers[i].thread, NULL,

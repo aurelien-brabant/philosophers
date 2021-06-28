@@ -1,7 +1,6 @@
 #include <stdlib.h>
 
-#include "philo_one.h"
-#include "philo_error.h"
+#include "philo.h"
 
 static void	give_forks(t_philosopher *philo, t_fork *forks)
 {

@@ -5,7 +5,7 @@
 ** Destroy global mutexes, freeing all the memory allocated for it.
 **
 ** The number of successfully destroyed mutexes is returned, which should be
-** equal to PHILO_TWO
+** equal to PHILO_ONE
 */
 
 size_t	destroy_mutexes(void)
