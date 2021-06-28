@@ -1,0 +1,146 @@
+[
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-Wall",
+            "-Werror",
+            "-Wextra",
+            "-Iinclude",
+            "-g",
+            "-o",
+            "src/setup.o",
+            "src/setup.c"
+        ],
+        "directory": "/home/abrabant/Prog/42/philosophers/philo",
+        "file": "src/setup.c"
+    },
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-Wall",
+            "-Werror",
+            "-Wextra",
+            "-Iinclude",
+            "-g",
+            "-o",
+            "src/output.o",
+            "src/output.c"
+        ],
+        "directory": "/home/abrabant/Prog/42/philosophers/philo",
+        "file": "src/output.c"
+    },
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-Wall",
+            "-Werror",
+            "-Wextra",
+            "-Iinclude",
+            "-g",
+            "-o",
+            "src/philo_routine.o",
+            "src/philo_routine.c"
+        ],
+        "directory": "/home/abrabant/Prog/42/philosophers/philo",
+        "file": "src/philo_routine.c"
+    },
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-Wall",
+            "-Werror",
+            "-Wextra",
+            "-Iinclude",
+            "-g",
+            "-o",
+            "src/error.o",
+            "src/error.c"
+        ],
+        "directory": "/home/abrabant/Prog/42/philosophers/philo",
+        "file": "src/error.c"
+    },
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-Wall",
+            "-Werror",
+            "-Wextra",
+            "-Iinclude",
+            "-g",
+            "-o",
+            "src/philo_watcher.o",
+            "src/philo_watcher.c"
+        ],
+        "directory": "/home/abrabant/Prog/42/philosophers/philo",
+        "file": "src/philo_watcher.c"
+    },
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-Wall",
+            "-Werror",
+            "-Wextra",
+            "-Iinclude",
+            "-g",
+            "-o",
+            "src/main.o",
+            "src/main.c"
+        ],
+        "directory": "/home/abrabant/Prog/42/philosophers/philo",
+        "file": "src/main.c"
+    },
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-Wall",
+            "-Werror",
+            "-Wextra",
+            "-Iinclude",
+            "-g",
+            "-o",
+            "src/get_timestamp.o",
+            "src/get_timestamp.c"
+        ],
+        "directory": "/home/abrabant/Prog/42/philosophers/philo",
+        "file": "src/get_timestamp.c"
+    },
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-Wall",
+            "-Werror",
+            "-Wextra",
+            "-Iinclude",
+            "-g",
+            "-o",
+            "src/thread.o",
+            "src/thread.c"
+        ],
+        "directory": "/home/abrabant/Prog/42/philosophers/philo",
+        "file": "src/thread.c"
+    },
+    {
+        "arguments": [
+            "clang",
+            "-c",
+            "-Wall",
+            "-Werror",
+            "-Wextra",
+            "-Iinclude",
+            "-g",
+            "-o",
+            "src/utils.o",
+            "src/utils.c"
+        ],
+        "directory": "/home/abrabant/Prog/42/philosophers/philo",
+        "file": "src/utils.c"
+    }
+]

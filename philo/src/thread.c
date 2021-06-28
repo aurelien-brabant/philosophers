@@ -14,24 +14,20 @@
 
 void	thread_terminate_simulation(t_philosopher *philosophers)
 {
-	unsigned long long	nb_of_philo;
 	unsigned long long	i;
 
 	i = 0;
-	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
-	while (i < nb_of_philo)
+	while (i < philosophers[0].params[NUMBER_OF_PHILOSOPHERS])
 		pthread_join(philosophers[i++].thread, NULL);
 }
 
 int	thread_philo_start_even(t_philosopher *philosophers)
 {
 	unsigned long long	i;
-	unsigned long long	nb_of_philo;
 	int					pthread_create_ret;
 
-	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
 	i = 0;
-	while (i < nb_of_philo)
+	while (i < philosophers[0].params[NUMBER_OF_PHILOSOPHERS])
 	{
 		pthread_create_ret = pthread_create(&philosophers[i].thread, NULL,
 				(void *)(void *)&spawn_philosopher, &philosophers[i]);
@@ -47,13 +43,11 @@ int	thread_philo_start_even(t_philosopher *philosophers)
 
 int	thread_philo_start_odd(t_philosopher *philosophers)
 {
-	unsigned long long	i;
-	unsigned long long	nb_of_philo;
-	int					pthread_create_ret;
+	unsigned int	i;
+	int				pthread_create_ret;
 
-	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
 	i = 1;
-	while (i < nb_of_philo)
+	while (i < philosophers[0].params[NUMBER_OF_PHILOSOPHERS])
 	{
 		pthread_create_ret = pthread_create(&philosophers[i].thread, NULL,
 				(void *)(void *)&spawn_philosopher, &philosophers[i]);

@@ -2,6 +2,7 @@
 # define PHILO_H
 # include <pthread.h>
 # define STATUS_BUFFER_SIZE 1000000
+# define ERROR_PREFIX "\033[1;31mError: \033[0m"
 # include <stdbool.h>
 
 typedef enum e_philo_param
@@ -47,27 +48,27 @@ typedef struct s_philosopher
 	pthread_mutex_t		*out_mutex;
 	bool				*health_check;
 	bool				*waiting_for_threads;
-	unsigned long long	id;
+	unsigned int 		id;
 	t_philo_state		state;
 	t_fork				*forks;
 	t_timestamp			last_meal_timestamp;
 	t_fork				*first_fork;
 	t_fork				*second_fork;
-	unsigned long long	eat_count;
+	unsigned int		*params;
+	unsigned int		eat_count;
 }	t_philosopher;
 
 
 size_t				ft_strlen(const char *s);
 int					dputs(const char *s, int fd);
-bool				parse_params(int ac, char **av);
+bool				parse_params(int ac, char **av, unsigned int *params);
 t_timestamp			get_timestamp(void);
-unsigned long long	*get_params(void);
 void				ft_msleep(unsigned long long ms);
 const char			*get_state_string(t_philo_state state);
-bool				parse_uint(const char *sint, unsigned long long *n);
+int					parse_uint(const char *sint, unsigned int *n);
 
 
-t_philosopher		*philosophers_init(void);
+t_philosopher		*philosophers_init(unsigned int *params);
 void				destroy_simulation(t_philosopher *philosophers);
 
 void				philo_change_state(t_philosopher *philo,
@@ -93,15 +94,6 @@ void				thread_terminate_simulation(t_philosopher *philosophers);
 void				*spawn_philosopher(t_philosopher *philo);
 void				*philo_watcher(t_philosopher *philo);
 
-/*
-** MUTEX
-*/
-
-bool				init_mutexes(void);
-size_t				destroy_mutexes(void);
-pthread_mutex_t		*get_mutexes(void);
-
-
-int	philo_error_print(t_philo_error philo_error);
+int					philo_error_print(t_philo_error philo_error);
 
 #endif

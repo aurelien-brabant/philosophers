@@ -1,8 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "lib.h"
-#include "philo_error.h"
+#include "philo.h"
 
 static const char	*g_errors[] = {
 	"Could not parse command line arguments\nUsage: ./philo_one <nb_of_philo> "
@@ -16,11 +15,9 @@ static const char	*g_errors[] = {
 	"Thread could not be joined",
 };
 
-static const char	*g_error_prefix = "\033[1;31mError: \033[0m";
-
 int	philo_error_print(t_philo_error philo_error)
 {
-	write(STDERR_FILENO, g_error_prefix, ft_strlen(g_error_prefix));
+	write(STDERR_FILENO, ERROR_PREFIX, ft_strlen(ERROR_PREFIX));
 	write(STDERR_FILENO, g_errors[philo_error],
 		ft_strlen(g_errors[philo_error]));
 	write(STDERR_FILENO, "\n", 1);

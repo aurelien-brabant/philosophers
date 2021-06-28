@@ -1,12 +1,11 @@
 include ../Makefile.template
 
 CC		= clang
-CFLAGS	= -Wall -Werror -Wextra -Iinclude
+CFLAGS	= -Wall -Werror -Wextra -Iinclude -g
 LD		= clang
 
-SRCS	= $(addprefix src/, main.c setup.c spawn_philosopher.c				\
-			philo_change_state.c philo_watcher.c mutex.c output_status.c	\
-			philo_routine.c thread.c error.c)
+SRCS	= $(addprefix src/, main.c setup.c philo_watcher.c output.c	\
+		  philo_routine.c thread.c error.c utils.c get_timestamp.c)
 
 HEADERS	= $(addprefix include/, philo.h)
 
@@ -21,4 +20,5 @@ $(TARGET): $(OBJS) $(HEADERS)
 	@printf "LD\t$(TARGET)\n"
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CFLAGS) -c $< -o $@
+	@printf "CC\t$<\n"

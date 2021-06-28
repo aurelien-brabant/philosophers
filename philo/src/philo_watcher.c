@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 
-#include "philo_one.h"
+#include "philo.h"
 
 /*
 ** is_philosopher_healthy
@@ -18,11 +18,11 @@
 static bool	is_philosopher_healthy(t_philosopher *philo)
 {
 	if (get_timestamp() >= philo->last_meal_timestamp
-		+ get_params()[TIME_TO_DIE])
+		+ philo->params[TIME_TO_DIE])
 	{
-		pthread_mutex_lock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
+		pthread_mutex_lock(philo->out_mutex);
 		philo_change_state(philo, PHILO_STATE_DEAD);
-		pthread_mutex_unlock(&get_mutexes()[PHILO_ONE_STATE_MUTEX]);
+		pthread_mutex_unlock(philo->out_mutex);
 		return (false);
 	}
 	return (true);
@@ -47,13 +47,13 @@ static bool	is_philosopher_healthy(t_philosopher *philo)
 
 void	*philo_watcher(t_philosopher *philosophers)
 {
-	unsigned long long	i;
-	unsigned long long	nb_of_full_philo;
-	unsigned long long	nb_of_philo;
-	unsigned long long	max_eat;
+	unsigned int	i;
+	unsigned int	nb_of_full_philo;
+	unsigned int	nb_of_philo;
+	unsigned int	max_eat;
 
-	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
-	max_eat = get_params()[NUMBER_OF_TIMES_EACH_PHILOSOPHER_MUST_EAT];
+	nb_of_philo = philosophers[0].params[NUMBER_OF_PHILOSOPHERS];
+	max_eat = philosophers[0].params[NUMBER_OF_TIMES_EACH_PHILOSOPHER_MUST_EAT];
 	nb_of_full_philo = 0;
 	i = 0;
 	while (1)
