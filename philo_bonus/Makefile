@@ -4,14 +4,14 @@ LD		= clang
 
 RM		= rm -rf
 
-SRCS	= $(addprefix src/, main.c data.c output.c philo.c thread.c	error.c	\
-		  utils.c time.c)
+SRCS	= $(addprefix src/, main.c output.c philo.c error.c	run_philo.c utils.c	\
+		  time.c process.c)
 
-HEADERS	= $(addprefix include/, philo.h)
+HEADERS	= $(addprefix include/, philo_bonus.h)
 
-OBJS	= $(LIB_OBJS) $(SRCS:%.c=%.o)
+OBJS	= $(SRCS:%.c=%.o)
 
-TARGET	= philo
+TARGET	= philo_bonus
 
 all: $(TARGET)
 
@@ -21,7 +21,7 @@ $(TARGET): $(OBJS) $(HEADERS)
 
 clean:
 	@$(RM) $(OBJS)
-
+	
 fclean: clean
 	@$(RM) $(TARGET)
 

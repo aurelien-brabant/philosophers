@@ -2,8 +2,7 @@
 #include <signal.h>
 #include <sys/wait.h>
 
-#include "philo_three.h"
-#include "philo_error.h"
+#include "philo_bonus.h"
 
 /*
 ** Kill all child processes. A pid of 0 means that for some reason the pid
@@ -13,12 +12,10 @@
 
 void	process_kill_children(t_philosopher *philosophers)
 {
-	unsigned long long	i;
-	unsigned long long	nb_of_philo;
+	unsigned int	i;
 
 	i = 0;
-	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
-	while (i < nb_of_philo)
+	while (i < philosophers[0].params[NB_PHILO])
 	{
 		if (philosophers[i].pid != 0)
 			kill(philosophers[i].pid, SIGKILL);
@@ -32,13 +29,11 @@ void	process_kill_children(t_philosopher *philosophers)
 
 void	process_start_children(t_philosopher *philosophers)
 {
-	unsigned long long	i;
-	unsigned long long	nb_of_philo;
-	int					pid;
+	unsigned int	i;
+	int				pid;
 
 	i = 0;
-	nb_of_philo = get_params()[NUMBER_OF_PHILOSOPHERS];
-	while (i < nb_of_philo)
+	while (i < philosophers[0].params[NB_PHILO])
 	{
 		pid = fork();
 		if (pid == -1)
@@ -61,6 +56,6 @@ void	process_wait_for_children(t_philosopher *philosophers)
 	i = 0;
 	while (waitpid(-1, &status, 0) != -1 && status == 0)
 		++i;
-	if (i < get_params()[NUMBER_OF_PHILOSOPHERS])
+	if (i < philosophers[0].params[NB_PHILO])
 		process_kill_children(philosophers);
 }

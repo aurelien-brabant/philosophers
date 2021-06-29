@@ -1,6 +1,6 @@
 #include <unistd.h>
 
-#include "philo_three.h"
+#include "philo_bonus.h"
 
 static size_t	int_char_size(unsigned long long n)
 {
@@ -72,4 +72,17 @@ void	output_status(const char *status, t_philosopher *philo)
 	concat_str(&buf_pos, status);
 	*buf_pos = '\0';
 	write(STDOUT_FILENO, buf, buf_pos - buf);
+}
+
+/*
+** Change the current state of a philosopher, outputing the change on STDOUT.
+*/
+
+void	philo_change_state(t_philosopher *philo, t_philo_state new_state)
+{
+	sem_wait(philo->sem_state);
+	philo->state = new_state;
+	output_status(get_state_string(philo->state), philo);
+	if (philo->state != PHILO_STATE_DEAD)
+		sem_post(philo->sem_state);
 }

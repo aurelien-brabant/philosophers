@@ -1,8 +1,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-#include "lib.h"
-#include "philo_error.h"
+#include "philo_bonus.h"
 
 static const char	*g_errors[] = {
 	"Could not parse command line arguments\nUsage: ./philo_three <nb_of_philo> "
