@@ -3,3 +3,5 @@ test
 *.o
 a.out
 ressources
+philo/philo
+philo_bonus/philo_bonus
