@@ -78,7 +78,6 @@ void	output_status(const char *status, t_philosopher *philo)
 ** Change the current state of a philosopher, outputing the change on STDOUT.
 */
 
-#include <stdio.h>
 void	philo_change_state(t_philosopher *philo, t_philo_state new_state)
 {
 	if (sem_wait(philo->sem_state) != 0)

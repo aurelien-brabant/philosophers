@@ -1,5 +1,5 @@
-#ifndef PHILO_THREE_H
-# define PHILO_THREE_H
+#ifndef PHILO_BONUS_H
+# define PHILO_BONUS_H
 # include <pthread.h>
 # include <semaphore.h>
 # include <stdbool.h>
@@ -54,7 +54,6 @@ typedef enum e_philo_two_semaphore
 	PHILO_THREE_SEM_MAX
 }	t_philo_two_semaphore;
 
-
 typedef unsigned long long int	t_timestamp;
 
 typedef struct s_philosopher
@@ -71,7 +70,7 @@ typedef struct s_philosopher
 	struct s_philosopher	*philosophers;
 }	t_philosopher;
 
-void				philo_change_state(t_philosopher *philo, 
+void				philo_change_state(t_philosopher *philo,
 						t_philo_state new_state);
 void				output_status(const char *status, t_philosopher *philo);
 
