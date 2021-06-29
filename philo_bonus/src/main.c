@@ -39,9 +39,8 @@ static int	semaphore_init(unsigned int nb_philo)
 	sem_t			*sem_state;
 	sem_t			*sem_fork;
 
-	if ((sem_unlink(SEM_NM_FORK) != 0 || sem_unlink(SEM_NM_STATE) != 0)
-		&& errno != ENOENT)
-		return (ERROR_SEM_UNLINK);
+	sem_unlink(SEM_NM_FORK);
+	sem_unlink(SEM_NM_STATE);
 	sem_state = sem_open(SEM_NM_STATE, O_CREAT, 0664, 1);
 	sem_fork = sem_open(SEM_NM_FORK, O_CREAT, 0664, nb_philo);
 	if (sem_state == SEM_FAILED || sem_fork == SEM_FAILED)
