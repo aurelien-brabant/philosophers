@@ -83,8 +83,10 @@ void	output_status(const char *status, t_philosopher *philo)
 
 void	philo_change_state(t_philosopher *philo, t_philo_state new_state)
 {
+	pthread_mutex_lock(philo->out_mutex);
 	philo->state = new_state;
 	output_status(get_state_string(philo->state), philo);
 	if (philo->state == PHILO_STATE_DEAD)
 		*philo->health_check = false;
+	pthread_mutex_unlock(philo->out_mutex);
 }

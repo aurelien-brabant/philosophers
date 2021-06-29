@@ -13,10 +13,7 @@
 
 void	*spawn_philosopher(t_philosopher *philo)
 {
-	unsigned long long	philo_nb;
-
-	philo_nb = philo->params[NUMBER_OF_PHILOSOPHERS];
-	while (philo_nb == 1 && *philo->health_check)
+	while (philo->params[NB_PHILO] == 1 && *philo->health_check)
 		usleep(100);
 	while (*philo->health_check)
 	{
@@ -28,6 +25,33 @@ void	*spawn_philosopher(t_philosopher *philo)
 	return (philo);
 }
 
+void	*philo_watcher(t_philosopher *philosophers)
+{
+	unsigned int	i;
+	unsigned int	full;
+	t_philosopher	*philo;
+
+	full = 0;
+	i = 0;
+	while (*philosophers[0].health_check)
+	{
+		philo = &philosophers[i];
+		if (get_timestamp() >= philo->last_meal_ts + philo->params[TIME_TO_DIE])
+			philo_change_state(philo, PHILO_STATE_DEAD);
+		if (philo->eat_count >= philo->params[MAX_EAT_COUNT]
+			&& ++full == philo->params[NB_PHILO])
+			*philo->health_check = false;
+		else if (++i == philo->params[NB_PHILO])
+		{
+			full = 0;
+			i = 0;
+			usleep(1000);
+		}
+	}
+	*philosophers[0].health_check = false;
+	return (philosophers);
+}
+
 void	philo_routine_eat(t_philosopher *philo)
 {
 	pthread_mutex_lock(philo->first_fork);
@@ -35,9 +59,9 @@ void	philo_routine_eat(t_philosopher *philo)
 	pthread_mutex_lock(philo->out_mutex);
 	output_status(" has taken a fork\n", philo);
 	output_status(" has taken a fork\n", philo);
-	philo_change_state(philo, PHILO_STATE_EATING);
 	pthread_mutex_unlock(philo->out_mutex);
-	philo->last_meal_timestamp = get_timestamp();
+	philo_change_state(philo, PHILO_STATE_EATING);
+	philo->last_meal_ts = get_timestamp();
 	philo->eat_count++;
 	ft_msleep(philo->params[TIME_TO_EAT]);
 	pthread_mutex_unlock(philo->first_fork);
@@ -46,15 +70,11 @@ void	philo_routine_eat(t_philosopher *philo)
 
 void	philo_routine_sleep(t_philosopher *philo)
 {
-	pthread_mutex_lock(philo->out_mutex);
 	philo_change_state(philo, PHILO_STATE_SLEEPING);
-	pthread_mutex_unlock(philo->out_mutex);
 	ft_msleep(philo->params[TIME_TO_SLEEP]);
 }
 
 void	philo_routine_think(t_philosopher *philo)
 {
-	pthread_mutex_lock(philo->out_mutex);
 	philo_change_state(philo, PHILO_STATE_THINKING);
-	pthread_mutex_unlock(philo->out_mutex);
 }

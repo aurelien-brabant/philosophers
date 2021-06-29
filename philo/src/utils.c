@@ -6,15 +6,14 @@
 
 const char	*get_state_string(t_philo_state state)
 {
-	if (state == PHILO_STATE_EATING)
-		return (" is eating\n");
-	if (state == PHILO_STATE_DEAD)
-		return (" \033[1;31mdied\033[0m\n");
-	if (state == PHILO_STATE_SLEEPING)
-		return (" is sleeping\n");
-	if (state == PHILO_STATE_THINKING)
-		return (" is thinking\n");
-	return (NULL);
+	static const char	*s[] = {
+		[PHILO_STATE_DEAD] = " \033[1;31mdied\033[0m\n",
+		[PHILO_STATE_EATING] = " is eating\n",
+		[PHILO_STATE_SLEEPING] = " is sleeping\n",
+		[PHILO_STATE_THINKING] = " is thinking\n"
+	};
+
+	return (s[state]);
 }
 
 int	parse_uint(const char *sint, unsigned int *n)
@@ -40,7 +39,7 @@ bool	parse_params(int ac, char **av, unsigned int *params)
 {
 	t_philo_param		param_id;
 
-	param_id = NUMBER_OF_PHILOSOPHERS;
+	param_id = NB_PHILO;
 	--ac;
 	++av;
 	if (ac < PHILO_PARAM_MAX - 1)
@@ -54,25 +53,8 @@ bool	parse_params(int ac, char **av, unsigned int *params)
 		++param_id;
 	}
 	if (ac < 5)
-		params[NUMBER_OF_TIMES_EACH_PHILOSOPHER_MUST_EAT] = UINT_MAX;
+		params[MAX_EAT_COUNT] = UINT_MAX;
 	return (true);
-}
-
-void	ft_msleep(unsigned long long duration_in_ms)
-{
-	t_timestamp	start_ts;
-	t_timestamp	current_ts;
-	t_timestamp	end_ts;
-
-	start_ts = get_timestamp();
-	end_ts = start_ts + duration_in_ms;
-	while (1)
-	{
-		current_ts = get_timestamp();
-		if (current_ts >= end_ts)
-			break ;
-		usleep(100);
-	}
 }
 
 size_t	ft_strlen(const char *s)

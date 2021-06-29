@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <pthread.h>
 #include <unistd.h>
+#include <time.h>
 
 #include "philo.h"
 
@@ -38,7 +39,7 @@ static int	prepare_simulation(t_philosopher *philosophers)
 		return (2);
 	*health_check = true;
 	i = 0;
-	while (i < philosophers[0].params[NUMBER_OF_PHILOSOPHERS])
+	while (i < philosophers[0].params[NB_PHILO])
 	{
 		philosophers[i].health_check = health_check;
 		philosophers[i].out_mutex = out_mutex;

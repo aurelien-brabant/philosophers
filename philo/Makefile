@@ -4,8 +4,8 @@ CC		= clang
 CFLAGS	= -Wall -Werror -Wextra -Iinclude -g
 LD		= clang
 
-SRCS	= $(addprefix src/, main.c setup.c philo_watcher.c output.c	\
-		  philo_routine.c thread.c error.c utils.c get_timestamp.c)
+SRCS	= $(addprefix src/, main.c data.c output.c philo.c thread.c	error.c	\
+		  utils.c time.c)
 
 HEADERS	= $(addprefix include/, philo.h)
 
@@ -17,8 +17,8 @@ all: $(TARGET)
 
 $(TARGET): $(OBJS) $(HEADERS) 
 	@$(LD) $(OBJS)  -lpthread $(LD_FLAGS) -o $(TARGET) 
-	@printf "LD\t$(TARGET)\n"
+	@printf "\033[1;39mLD\t\033[1;32m$(TARGET)\n"
 
 %.o: %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
-	@printf "CC\t$<\n"
+	@printf "\033[1;39mCC\033[0m\t$<\n"
