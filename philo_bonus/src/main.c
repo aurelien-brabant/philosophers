@@ -29,8 +29,8 @@ static void	run_simulation(t_philosopher *philosophers)
 static void	exit_clean(t_philosopher *philosophers, int status)
 {
 	free(philosophers);
-	if (sem_unlink(SEM_NM_STATE) != 0 || sem_unlink(SEM_NM_FORK) != 0)
-		philo_error_print(ERROR_SEM_UNLINK);
+	sem_unlink(SEM_NM_FORK);
+	sem_unlink(SEM_NM_STATE);
 	exit(status);
 }
 
@@ -88,6 +88,5 @@ int	main(int ac, char **av)
 	if (ret != 0)
 		exit_clean(philosophers, philo_error_print(ret));
 	run_simulation(philosophers);
-	free(philosophers);
-	return (EXIT_SUCCESS);
+	exit_clean(philosophers, EXIT_SUCCESS);
 }

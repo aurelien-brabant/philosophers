@@ -2,9 +2,12 @@
 
 void	philo_routine_eat(t_philosopher *philo)
 {
-	sem_wait(philo->sem_fork);
-	sem_wait(philo->sem_fork);
-	sem_wait(philo->sem_state);
+	if (sem_wait(philo->sem_fork) != 0)
+		return ;
+	if (sem_wait(philo->sem_fork) != 0)
+		return ;
+	if (sem_wait(philo->sem_state) != 0)
+		return ;
 	output_status(" has taken a fork\n", philo);
 	output_status(" has taken a fork\n", philo);
 	sem_post(philo->sem_state);
